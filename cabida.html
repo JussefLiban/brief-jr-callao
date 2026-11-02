@@ -11,7 +11,7 @@
 :root{
   --ground:#F2F4F2; --surface:#FFFFFF; --ink:#1B2428; --muted:#58656A; --line:#D6DDDA;
   --accent:#2C5C4C; --accent-soft:#E3EDE8; --ocre:#A8762A; --ocre-soft:#F5ECDC; --risk:#A3422A; --risk-soft:#F6E4DE;
-  --c-est:#F3DFB4; --c-dob:#CFE3D8; --c-com:#D3E0EE; --c-shop:#EDC9C1; --c-circ:#E9ECEA; --c-core:#7D8A8F; --c-patio:#E6F0DA; --c-park:#F1F1EC; --c-dup:#DDD3EE; --c-senda:#FBEFC4; --c-dep:#E6DDD0; --c-stroke:#3A4549;
+  --c-est:#F3DFB4; --c-dob:#CFE3D8; --c-com:#D3E0EE; --c-shop:#EDC9C1; --c-circ:#E9ECEA; --c-core:#7D8A8F; --c-patio:#E6F0DA; --c-park:#F1F1EC; --c-dup:#DDD3EE; --c-senda:#FBEFC4; --c-dep:#E6DDD0; --c-sky:#9FD3E8; --c-stroke:#3A4549;
   --serif:"Libre Caslon Text", Georgia, "Times New Roman", serif;
   --sans:"Public Sans", "Segoe UI", system-ui, sans-serif;
   --mono:"IBM Plex Mono", ui-monospace, Consolas, monospace;
@@ -21,14 +21,14 @@
     color-scheme:dark;
     --ground:#12181A; --surface:#1A2225; --ink:#E4E9E7; --muted:#9AA7A6; --line:#2E3A3D;
     --accent:#86C0A8; --accent-soft:#1E302A; --ocre:#D8AA5E; --ocre-soft:#2E2618; --risk:#E58B6F; --risk-soft:#351F19;
-    --c-est:#5A4A28; --c-dob:#2E4A3D; --c-com:#2C3E52; --c-shop:#5A3530; --c-circ:#263033; --c-core:#5E6A6E; --c-patio:#2B3A26; --c-park:#20292B; --c-dup:#3F3656; --c-senda:#4A4226; --c-dep:#3D3730; --c-stroke:#C9D2CF;
+    --c-est:#5A4A28; --c-dob:#2E4A3D; --c-com:#2C3E52; --c-shop:#5A3530; --c-circ:#263033; --c-core:#5E6A6E; --c-patio:#2B3A26; --c-park:#20292B; --c-dup:#3F3656; --c-senda:#4A4226; --c-dep:#3D3730; --c-sky:#2D6A82; --c-stroke:#C9D2CF;
   }
 }
 :root[data-theme="dark"]{
   color-scheme:dark;
   --ground:#12181A; --surface:#1A2225; --ink:#E4E9E7; --muted:#9AA7A6; --line:#2E3A3D;
   --accent:#86C0A8; --accent-soft:#1E302A; --ocre:#D8AA5E; --ocre-soft:#2E2618; --risk:#E58B6F; --risk-soft:#351F19;
-  --c-est:#5A4A28; --c-dob:#2E4A3D; --c-com:#2C3E52; --c-shop:#5A3530; --c-circ:#263033; --c-core:#5E6A6E; --c-patio:#2B3A26; --c-park:#20292B; --c-dup:#3F3656; --c-senda:#4A4226; --c-dep:#3D3730; --c-stroke:#C9D2CF;
+  --c-est:#5A4A28; --c-dob:#2E4A3D; --c-com:#2C3E52; --c-shop:#5A3530; --c-circ:#263033; --c-core:#5E6A6E; --c-patio:#2B3A26; --c-park:#20292B; --c-dup:#3F3656; --c-senda:#4A4226; --c-dep:#3D3730; --c-sky:#2D6A82; --c-stroke:#C9D2CF;
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;padding:0 16px}
@@ -66,7 +66,7 @@ svg .est{fill:var(--c-est);stroke:var(--c-stroke);stroke-width:.8}
 svg .dob{fill:var(--c-dob);stroke:var(--c-stroke);stroke-width:.8}
 svg .com{fill:var(--c-com);stroke:var(--c-stroke);stroke-width:.8}
 svg .shop{fill:var(--c-shop);stroke:var(--c-stroke);stroke-width:.8}
-svg .sky{fill:none;stroke:var(--accent);stroke-width:1.2;stroke-dasharray:6 3}
+svg .sky{fill:var(--c-sky);fill-opacity:.45;stroke:var(--accent);stroke-width:1.2;stroke-dasharray:6 3}
 svg .dep{fill:var(--c-dep);stroke:var(--c-stroke);stroke-width:.6}
 svg .senda{fill:var(--c-senda);stroke:var(--c-stroke);stroke-width:.6;stroke-dasharray:3 2}
 svg .dup{fill:var(--c-dup);stroke:var(--c-stroke);stroke-width:.8}
@@ -144,6 +144,7 @@ footer{margin-top:52px;padding-top:14px;border-top:1px solid var(--line);font-si
     <span><i style="background:var(--c-circ)"></i>Galería / pasillo</span>
     <span><i style="background:var(--c-core)"></i>Escalera / ascensor / montaautos</span>
     <span><i style="background:var(--c-patio)"></i>Patio hundido</span>
+    <span><i style="background:var(--c-sky);opacity:.6"></i>Vacío a cielo abierto</span>
     <span><i style="background:var(--c-dup)"></i>Dúplex</span>
     <span><i style="background:var(--c-core);width:6px"></i>Escalera interna del dúplex</span>
     <span><i style="background:var(--c-senda)"></i>Senda peatonal</span>
