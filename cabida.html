@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cabida Colectiva Jr. Callao</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --ground:#F2F4F2; --surface:#FFFFFF; --ink:#1B2428; --muted:#58656A; --line:#D6DDDA;
+  --accent:#2C5C4C; --accent-soft:#E3EDE8; --ocre:#A8762A; --ocre-soft:#F5ECDC; --risk:#A3422A; --risk-soft:#F6E4DE;
+  --c-est:#F3DFB4; --c-dob:#CFE3D8; --c-com:#D3E0EE; --c-shop:#EDC9C1; --c-circ:#E9ECEA; --c-core:#7D8A8F; --c-patio:#E6F0DA; --c-park:#F1F1EC; --c-dup:#DDD3EE; --c-stroke:#3A4549;
+  --serif:"Libre Caslon Text", Georgia, "Times New Roman", serif;
+  --sans:"Public Sans", "Segoe UI", system-ui, sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --ground:#12181A; --surface:#1A2225; --ink:#E4E9E7; --muted:#9AA7A6; --line:#2E3A3D;
+    --accent:#86C0A8; --accent-soft:#1E302A; --ocre:#D8AA5E; --ocre-soft:#2E2618; --risk:#E58B6F; --risk-soft:#351F19;
+    --c-est:#5A4A28; --c-dob:#2E4A3D; --c-com:#2C3E52; --c-shop:#5A3530; --c-circ:#263033; --c-core:#5E6A6E; --c-patio:#2B3A26; --c-park:#20292B; --c-dup:#3F3656; --c-stroke:#C9D2CF;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --ground:#12181A; --surface:#1A2225; --ink:#E4E9E7; --muted:#9AA7A6; --line:#2E3A3D;
+  --accent:#86C0A8; --accent-soft:#1E302A; --ocre:#D8AA5E; --ocre-soft:#2E2618; --risk:#E58B6F; --risk-soft:#351F19;
+  --c-est:#5A4A28; --c-dob:#2E4A3D; --c-com:#2C3E52; --c-shop:#5A3530; --c-circ:#263033; --c-core:#5E6A6E; --c-patio:#2B3A26; --c-park:#20292B; --c-dup:#3F3656; --c-stroke:#C9D2CF;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;padding:0 16px}
+.page{max-width:960px;margin:0 auto;padding-block:40px 64px}
+h1,h2{font-family:var(--serif);font-weight:400;line-height:1.2;margin:0;text-wrap:balance}
+h1{font-size:clamp(28px,4.4vw,40px)} h1 em{color:var(--accent)}
+h2{font-size:25px}
+p{margin:0}
+.eyebrow,.kicker{font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:700}
+.eyebrow{color:var(--muted)} .kicker{color:var(--accent)}
+.draft{justify-self:start;font-size:11.5px;font-weight:600;color:var(--ocre);background:var(--ocre-soft);padding:3px 10px;border-radius:3px}
+header{display:grid;gap:14px;padding-bottom:24px;border-bottom:1px solid var(--line)}
+.thesis{font-size:18px;color:var(--muted);max-width:62ch}
+section{padding-top:44px;display:grid;gap:16px}
+.small{font-size:13.5px;color:var(--muted);max-width:75ch}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:22px}
+.kpis div{border-top:2px solid var(--accent);padding-top:8px;display:grid;gap:2px}
+.kpis .v{font-family:var(--mono);font-size:26px}
+.kpis .l{font-size:13px;color:var(--muted)}
+.kpis .warn{border-top-color:var(--risk)}
+.three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.card{background:var(--surface);border:1px solid var(--line);padding:16px;display:grid;gap:6px;align-content:start}
+.card h3{margin:0;font-family:var(--serif);font-weight:400;font-size:18px}
+.card p{font-size:14.5px;color:var(--muted)}
+.plans{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.plans figure{margin:0;background:var(--surface);border:1px solid var(--line);padding:12px;display:grid;gap:8px}
+figcaption{font-size:13px;color:var(--muted)}
+figcaption b{color:var(--ink);font-weight:600}
+svg{width:100%;height:auto;display:block}
+svg .lot{fill:none;stroke:var(--c-stroke);stroke-width:2}
+svg .patio{fill:var(--c-patio);stroke:var(--c-stroke);stroke-width:.6}
+svg .circ{fill:var(--c-circ);stroke:var(--c-stroke);stroke-width:.6}
+svg .est{fill:var(--c-est);stroke:var(--c-stroke);stroke-width:.8}
+svg .dob{fill:var(--c-dob);stroke:var(--c-stroke);stroke-width:.8}
+svg .com{fill:var(--c-com);stroke:var(--c-stroke);stroke-width:.8}
+svg .shop{fill:var(--c-shop);stroke:var(--c-stroke);stroke-width:.8}
+svg .dup{fill:var(--c-dup);stroke:var(--c-stroke);stroke-width:.8}
+svg .tick{stroke:var(--c-stroke);stroke-width:1}
+svg .park{fill:var(--c-park);stroke:var(--c-stroke);stroke-width:.6}
+svg .void{fill:none;stroke:var(--c-stroke);stroke-width:.6;stroke-dasharray:4 3}
+svg .core{fill:var(--c-core);stroke:var(--c-stroke);stroke-width:.8}
+svg .fac{stroke:var(--ocre);stroke-width:5}
+svg .grd{stroke:var(--c-stroke);stroke-width:1.5}
+svg .lim{stroke:var(--risk);stroke-width:1.2;stroke-dasharray:5 4}
+svg text{fill:var(--ink);font-family:var(--sans)}
+svg .lb{font-size:8.5px;font-weight:600;text-anchor:middle}
+svg .sb{font-size:7.5px;text-anchor:middle;font-family:var(--mono)}
+svg .dim{font-size:10px;text-anchor:middle;font-weight:600;fill:var(--ocre)}
+svg .dim2{font-size:9px;text-anchor:middle;fill:var(--muted);font-family:var(--mono)}
+svg .dimr{font-size:9.5px;text-anchor:end;fill:var(--muted)}
+svg .diml{font-size:9.5px;text-anchor:start;fill:var(--muted)}
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:13px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:14px;height:14px;border:1px solid var(--c-stroke);display:inline-block}
+.sectionfig{background:var(--surface);border:1px solid var(--line);padding:12px;margin:0;display:grid;gap:8px;overflow-x:auto}
+.sectionfig svg{min-width:520px}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:520px}
+th,td{text-align:left;vertical-align:top;padding:10px 14px;border-bottom:1px solid var(--line)}
+thead th{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;background:var(--ground)}
+tbody th{font-weight:600}
+tbody tr:last-child th,tbody tr:last-child td{border-bottom:0}
+td.n{font-family:var(--mono);text-align:right;white-space:nowrap}
+.ok{color:var(--accent);font-weight:700} .no{color:var(--risk);font-weight:700} .q{color:var(--ocre);font-weight:700}
+tr.tot th,tr.tot td{font-weight:700;background:var(--ground)}
+footer{margin-top:52px;padding-top:14px;border-top:1px solid var(--line);font-size:12px;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.plans3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:2px}
+.plans3 figure{margin:0;background:var(--surface);border:1px solid var(--line);padding:12px;display:grid;gap:8px;align-content:start}
+@media (max-width:760px){.plans,.plans3{grid-template-columns:1fr}}
+@media (max-width:760px){
+  .kpis{grid-template-columns:1fr 1fr}
+  .three,.plans{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="page">
+<header>
+  <span class="draft">Estudio preliminar · versión 4 · para discusión</span>
+  <span class="eyebrow">Cabida · Jr. Callao 953 · Vivienda de uso colectivo</span>
+  <h1>Vivienda colectiva con <em>patio hundido al fondo</em></h1>
+  <p class="thesis">Un solo sótano resuelve dos cosas: adelante, los estacionamientos con montaautos; atrás, las áreas comunes abiertas a un patio hundido con luz natural. Encima, cuatro niveles de unidades para una o dos personas alrededor de un patio central.</p>
+  <div class="kpis">
+    <div><span class="v">66</span><span class="l">unidades: 43 estudios y 23 dobles</span></div>
+    <div><span class="v">~89</span><span class="l">residentes</span></div>
+    <div><span class="v">1,853 m²</span><span class="l">área de unidades</span></div>
+    <div><span class="v">18</span><span class="l">estacionamientos en sótano (exigidos: 18)</span></div>
+  </div>
+</header>
+
+<section>
+  <span class="kicker">Plantas</span>
+  <h2>Plantas por nivel</h2>
+  <div class="plans">
+    <figure><svg viewBox="0 0 282 580" role="img"><rect x="34.0" y="34.0" width="214.5" height="511.5" class="lot"/><rect x="89.0" y="34.0" width="104.5" height="341.0" class="circ"/><text x="141.2" y="202.5" class="lb">Pasillo de</text><text x="141.2" y="212.5" class="lb">maniobra</text><rect x="94.5" y="34.0" width="38.5" height="71.5" class="core"/><text x="113.8" y="62.8" class="lb">Monta-</text><text x="113.8" y="72.8" class="lb">autos</text><text x="113.8" y="82.8" class="lb">giratorio</text><rect x="34.0" y="111.0" width="56.1" height="66.0" class="core"/><text x="62.0" y="142.0" class="lb">Escalera</text><text x="62.0" y="152.0" class="lb">y ascensor</text><text x="113.8" y="128.6" class="lb">↓ sale al pasillo</text><rect x="34.0" y="34.0" width="60.5" height="71.5" class="com"/><text x="64.2" y="67.8" class="lb">Cisterna</text><text x="64.2" y="77.8" class="lb">y bombas</text><rect x="34.0" y="177.0" width="55.0" height="27.5" class="park"/><text x="61.5" y="193.8" class="lb">1</text><rect x="34.0" y="204.5" width="55.0" height="27.5" class="park"/><text x="61.5" y="221.2" class="lb">2</text><rect x="34.0" y="232.0" width="55.0" height="27.5" class="park"/><text x="61.5" y="248.8" class="lb">3</text><rect x="34.0" y="259.5" width="55.0" height="27.5" class="park"/><text x="61.5" y="276.2" class="lb">4</text><rect x="34.0" y="287.0" width="55.0" height="27.5" class="park"/><text x="61.5" y="303.8" class="lb">5</text><rect x="34.0" y="314.5" width="55.0" height="27.5" class="park"/><text x="61.5" y="331.2" class="lb">6</text><rect x="34.0" y="342.0" width="55.0" height="27.5" class="park"/><text x="61.5" y="358.8" class="lb">7</text><rect x="193.5" y="50.5" width="55.0" height="27.5" class="park"/><text x="221.0" y="67.2" class="lb">8</text><rect x="193.5" y="78.0" width="55.0" height="27.5" class="park"/><text x="221.0" y="94.8" class="lb">9</text><rect x="193.5" y="111.0" width="55.0" height="27.5" class="park"/><text x="221.0" y="127.8" class="lb">10</text><rect x="193.5" y="138.5" width="55.0" height="27.5" class="park"/><text x="221.0" y="155.2" class="lb">11</text><rect x="193.5" y="166.0" width="55.0" height="27.5" class="park"/><text x="221.0" y="182.8" class="lb">12</text><rect x="193.5" y="193.5" width="55.0" height="27.5" class="park"/><text x="221.0" y="210.2" class="lb">13</text><rect x="193.5" y="221.0" width="55.0" height="27.5" class="park"/><text x="221.0" y="237.8" class="lb">14</text><rect x="193.5" y="248.5" width="55.0" height="27.5" class="park"/><text x="221.0" y="265.2" class="lb">15</text><rect x="193.5" y="276.0" width="55.0" height="27.5" class="park"/><text x="221.0" y="292.8" class="lb">16</text><rect x="193.5" y="303.5" width="55.0" height="27.5" class="park"/><text x="221.0" y="320.2" class="lb">17</text><rect x="193.5" y="331.0" width="55.0" height="27.5" class="park"/><text x="221.0" y="347.8" class="lb">18</text><rect x="34.0" y="375.0" width="104.5" height="82.5" class="com"/><text x="86.2" y="407.2" class="lb">Cocina y</text><text x="86.2" y="417.2" class="lb">comedor</text><text x="86.2" y="428.2" class="sb">71 m²</text><rect x="138.5" y="375.0" width="66.0" height="82.5" class="com"/><text x="171.5" y="407.2" class="lb">Sala y</text><text x="171.5" y="417.2" class="lb">cine</text><text x="171.5" y="428.2" class="sb">45 m²</text><rect x="204.5" y="375.0" width="44.0" height="82.5" class="com"/><text x="226.5" y="407.2" class="lb">Lavandería</text><text x="226.5" y="417.2" class="lb">autoservicio</text><text x="226.5" y="428.2" class="sb">30 m²</text><rect x="34.0" y="457.5" width="214.5" height="88.0" class="patio"/><text x="141.2" y="497.5" class="lb">Patio hundido −3.25</text><text x="141.2" y="508.5" class="sb">156 m²</text><line x1="34" y1="34" x2="248.5" y2="34" class="fac"/><text x="141.2" y="16" class="dim">Sótano −3.25 · ingreso vehicular por montaautos</text><text x="141.2" y="28" class="dim2">19.50 m</text><text x="24" y="289.8" class="dim2" transform="rotate(-90 24 289.8)">46.50 m</text></svg><figcaption><b>Sótano −3.25.</b> 18 estacionamientos. El montaautos, con plataforma giratoria, baja desde el Jr. Callao y deja el auto en el pasillo de maniobra, de frente. Al fondo, cocina-comedor, sala y cine, y lavandería de autoservicio, con ventanales al patio hundido.</figcaption></figure>
+    <figure><svg viewBox="0 0 282 580" role="img"><rect x="34.0" y="34.0" width="214.5" height="511.5" class="lot"/><rect x="103.3" y="111.0" width="75.9" height="264.0" class="patio"/><text x="141.2" y="234.0" class="lb">Patio central</text><text x="141.2" y="244.0" class="lb">−0.60</text><text x="141.2" y="255.0" class="sb">166 m²</text><rect x="90.1" y="111.0" width="13.2" height="264.0" class="circ"/><rect x="179.2" y="111.0" width="13.2" height="264.0" class="circ"/><rect x="34.0" y="375.0" width="214.5" height="13.2" class="circ"/><rect x="34.0" y="111.0" width="56.1" height="66.0" class="core"/><text x="62.0" y="142.0" class="lb">Escalera</text><text x="62.0" y="152.0" class="lb">y ascensor</text><rect x="34.0" y="177.0" width="56.1" height="42.9" class="est"/><text x="62.0" y="194.4" class="lb">E</text><text x="62.0" y="205.4" class="sb">19.9</text><rect x="34.0" y="219.9" width="56.1" height="42.9" class="est"/><text x="62.0" y="237.3" class="lb">E</text><text x="62.0" y="248.3" class="sb">19.9</text><rect x="34.0" y="262.8" width="56.1" height="42.9" class="est"/><text x="62.0" y="280.2" class="lb">E</text><text x="62.0" y="291.2" class="sb">19.9</text><rect x="34.0" y="305.7" width="56.1" height="69.3" class="dob"/><text x="62.0" y="336.3" class="lb">D</text><text x="62.0" y="347.3" class="sb">32.1</text><rect x="192.4" y="111.0" width="56.1" height="42.9" class="est"/><text x="220.4" y="128.4" class="lb">E</text><text x="220.4" y="139.4" class="sb">19.9</text><rect x="192.4" y="153.9" width="56.1" height="42.9" class="est"/><text x="220.4" y="171.3" class="lb">E</text><text x="220.4" y="182.3" class="sb">19.9</text><rect x="192.4" y="196.8" width="56.1" height="42.9" class="est"/><text x="220.4" y="214.2" class="lb">E</text><text x="220.4" y="225.2" class="sb">19.9</text><rect x="192.4" y="239.7" width="56.1" height="69.3" class="dob"/><text x="220.4" y="270.3" class="lb">D</text><text x="220.4" y="281.3" class="sb">32.1</text><rect x="192.4" y="309.0" width="56.1" height="66.0" class="dob"/><text x="220.4" y="338.0" class="lb">D</text><text x="220.4" y="349.0" class="sb">30.6</text><rect x="34.0" y="388.2" width="66.0" height="69.3" class="dob"/><text x="67.0" y="418.9" class="lb">D</text><text x="67.0" y="429.9" class="sb">37.8</text><rect x="100.0" y="388.2" width="41.2" height="69.3" class="est"/><text x="120.6" y="418.9" class="lb">E</text><text x="120.6" y="429.9" class="sb">23.6</text><rect x="141.2" y="388.2" width="41.2" height="69.3" class="est"/><text x="161.9" y="418.9" class="lb">E</text><text x="161.9" y="429.9" class="sb">23.6</text><rect x="182.5" y="388.2" width="66.0" height="69.3" class="dob"/><text x="215.5" y="418.9" class="lb">D</text><text x="215.5" y="429.9" class="sb">37.8</text><rect x="34.0" y="457.5" width="214.5" height="88.0" class="void"/><text x="141.2" y="504.5" class="lb">Vacío sobre patio hundido</text><rect x="34.0" y="34.0" width="60.5" height="77.0" class="shop"/><text x="64.2" y="68.5" class="lb">Comercio</text><text x="64.2" y="79.5" class="sb">38 m²</text><rect x="94.5" y="34.0" width="38.5" height="77.0" class="core"/><text x="113.8" y="70.5" class="lb">Monta-</text><text x="113.8" y="80.5" class="lb">autos</text><rect x="133.0" y="34.0" width="66.0" height="77.0" class="com"/><text x="166.0" y="63.5" class="lb">Recepción</text><text x="166.0" y="73.5" class="lb">y vestíbulo</text><text x="166.0" y="84.5" class="sb">42 m²</text><rect x="199.0" y="34.0" width="49.5" height="77.0" class="shop"/><text x="223.8" y="68.5" class="lb">Comercio</text><text x="223.8" y="79.5" class="sb">32 m²</text><line x1="34" y1="34" x2="248.5" y2="34" class="fac"/><text x="141.2" y="16" class="dim">Primer nivel −0.60 · Jr. Callao</text><text x="141.2" y="28" class="dim2">19.50 m</text><text x="24" y="289.8" class="dim2" transform="rotate(-90 24 289.8)">46.50 m</text></svg><figcaption><b>Primer nivel −0.60.</b> Al frente, dos locales comerciales, montaautos y recepción con paso al patio central. El núcleo de escalera y ascensor queda detrás, en el costado izquierdo. 13 unidades.</figcaption></figure>
+  </div>
+  <div class="plans3">
+    <figure><svg viewBox="0 0 282 580" role="img"><rect x="34.0" y="34.0" width="214.5" height="511.5" class="lot"/><rect x="103.3" y="111.0" width="75.9" height="264.0" class="patio"/><text x="141.2" y="234.0" class="lb">Patio central</text><text x="141.2" y="244.0" class="lb">−0.60</text><text x="141.2" y="255.0" class="sb">166 m²</text><rect x="90.1" y="111.0" width="13.2" height="264.0" class="circ"/><rect x="179.2" y="111.0" width="13.2" height="264.0" class="circ"/><rect x="34.0" y="375.0" width="214.5" height="13.2" class="circ"/><rect x="34.0" y="111.0" width="56.1" height="66.0" class="core"/><text x="62.0" y="142.0" class="lb">Escalera</text><text x="62.0" y="152.0" class="lb">y ascensor</text><rect x="34.0" y="177.0" width="56.1" height="42.9" class="est"/><text x="62.0" y="194.4" class="lb">E</text><text x="62.0" y="205.4" class="sb">19.9</text><rect x="34.0" y="219.9" width="56.1" height="42.9" class="est"/><text x="62.0" y="237.3" class="lb">E</text><text x="62.0" y="248.3" class="sb">19.9</text><rect x="34.0" y="262.8" width="56.1" height="42.9" class="est"/><text x="62.0" y="280.2" class="lb">E</text><text x="62.0" y="291.2" class="sb">19.9</text><rect x="34.0" y="305.7" width="56.1" height="69.3" class="dob"/><text x="62.0" y="336.3" class="lb">D</text><text x="62.0" y="347.3" class="sb">32.1</text><rect x="192.4" y="111.0" width="56.1" height="42.9" class="est"/><text x="220.4" y="128.4" class="lb">E</text><text x="220.4" y="139.4" class="sb">19.9</text><rect x="192.4" y="153.9" width="56.1" height="42.9" class="est"/><text x="220.4" y="171.3" class="lb">E</text><text x="220.4" y="182.3" class="sb">19.9</text><rect x="192.4" y="196.8" width="56.1" height="42.9" class="est"/><text x="220.4" y="214.2" class="lb">E</text><text x="220.4" y="225.2" class="sb">19.9</text><rect x="192.4" y="239.7" width="56.1" height="69.3" class="dob"/><text x="220.4" y="270.3" class="lb">D</text><text x="220.4" y="281.3" class="sb">32.1</text><rect x="192.4" y="309.0" width="56.1" height="66.0" class="dob"/><text x="220.4" y="338.0" class="lb">D</text><text x="220.4" y="349.0" class="sb">30.6</text><rect x="34.0" y="388.2" width="66.0" height="69.3" class="dob"/><text x="67.0" y="418.9" class="lb">D</text><text x="67.0" y="429.9" class="sb">37.8</text><rect x="100.0" y="388.2" width="41.2" height="69.3" class="est"/><text x="120.6" y="418.9" class="lb">E</text><text x="120.6" y="429.9" class="sb">23.6</text><rect x="141.2" y="388.2" width="41.2" height="69.3" class="est"/><text x="161.9" y="418.9" class="lb">E</text><text x="161.9" y="429.9" class="sb">23.6</text><rect x="182.5" y="388.2" width="66.0" height="69.3" class="dob"/><text x="215.5" y="418.9" class="lb">D</text><text x="215.5" y="429.9" class="sb">37.8</text><rect x="34.0" y="457.5" width="214.5" height="88.0" class="void"/><text x="141.2" y="504.5" class="lb">Vacío sobre patio hundido</text><rect x="34.0" y="97.8" width="214.5" height="13.2" class="circ"/><rect x="34.0" y="34.0" width="60.5" height="63.8" class="dob"/><text x="64.2" y="61.9" class="lb">D</text><text x="64.2" y="72.9" class="sb">31.9</text><rect x="94.5" y="34.0" width="38.5" height="63.8" class="est"/><text x="113.8" y="61.9" class="lb">E</text><text x="113.8" y="72.9" class="sb">20.3</text><rect x="133.0" y="34.0" width="38.5" height="63.8" class="est"/><text x="152.2" y="61.9" class="lb">E</text><text x="152.2" y="72.9" class="sb">20.3</text><rect x="171.5" y="34.0" width="38.5" height="63.8" class="est"/><text x="190.8" y="61.9" class="lb">E</text><text x="190.8" y="72.9" class="sb">20.3</text><rect x="210.0" y="34.0" width="38.5" height="63.8" class="est"/><text x="229.2" y="61.9" class="lb">E</text><text x="229.2" y="72.9" class="sb">20.3</text><line x1="34" y1="34" x2="248.5" y2="34" class="fac"/><text x="141.2" y="16" class="dim">Niveles 2 y 3 · Jr. Callao</text><text x="141.2" y="28" class="dim2">19.50 m</text><text x="24" y="289.8" class="dim2" transform="rotate(-90 24 289.8)">46.50 m</text></svg><figcaption><b>Niveles 2 y 3.</b> 18 unidades por nivel, 5 hacia la calle con vista al parque. En el nivel 2 no hay unidad sobre el montaautos: quedan 17.</figcaption></figure>
+    <figure><svg viewBox="0 0 282 580" role="img"><rect x="34.0" y="34.0" width="214.5" height="511.5" class="lot"/><rect x="103.3" y="111.0" width="75.9" height="264.0" class="patio"/><text x="141.2" y="234.0" class="lb">Patio central</text><text x="141.2" y="244.0" class="lb">−0.60</text><text x="141.2" y="255.0" class="sb">166 m²</text><rect x="90.1" y="111.0" width="13.2" height="264.0" class="circ"/><rect x="179.2" y="111.0" width="13.2" height="264.0" class="circ"/><rect x="34.0" y="375.0" width="214.5" height="13.2" class="circ"/><rect x="34.0" y="111.0" width="56.1" height="66.0" class="core"/><text x="62.0" y="142.0" class="lb">Escalera</text><text x="62.0" y="152.0" class="lb">y ascensor</text><rect x="34.0" y="177.0" width="56.1" height="42.9" class="est"/><text x="62.0" y="194.4" class="lb">E</text><text x="62.0" y="205.4" class="sb">19.9</text><rect x="34.0" y="219.9" width="56.1" height="42.9" class="est"/><text x="62.0" y="237.3" class="lb">E</text><text x="62.0" y="248.3" class="sb">19.9</text><rect x="34.0" y="262.8" width="56.1" height="42.9" class="est"/><text x="62.0" y="280.2" class="lb">E</text><text x="62.0" y="291.2" class="sb">19.9</text><rect x="34.0" y="305.7" width="56.1" height="69.3" class="dob"/><text x="62.0" y="336.3" class="lb">D</text><text x="62.0" y="347.3" class="sb">32.1</text><rect x="192.4" y="111.0" width="56.1" height="42.9" class="est"/><text x="220.4" y="128.4" class="lb">E</text><text x="220.4" y="139.4" class="sb">19.9</text><rect x="192.4" y="153.9" width="56.1" height="42.9" class="est"/><text x="220.4" y="171.3" class="lb">E</text><text x="220.4" y="182.3" class="sb">19.9</text><rect x="192.4" y="196.8" width="56.1" height="42.9" class="est"/><text x="220.4" y="214.2" class="lb">E</text><text x="220.4" y="225.2" class="sb">19.9</text><rect x="192.4" y="239.7" width="56.1" height="69.3" class="dob"/><text x="220.4" y="270.3" class="lb">D</text><text x="220.4" y="281.3" class="sb">32.1</text><rect x="192.4" y="309.0" width="56.1" height="66.0" class="dob"/><text x="220.4" y="338.0" class="lb">D</text><text x="220.4" y="349.0" class="sb">30.6</text><rect x="34.0" y="388.2" width="66.0" height="69.3" class="dob"/><text x="67.0" y="418.9" class="lb">D</text><text x="67.0" y="429.9" class="sb">37.8</text><rect x="100.0" y="388.2" width="41.2" height="69.3" class="est"/><text x="120.6" y="418.9" class="lb">E</text><text x="120.6" y="429.9" class="sb">23.6</text><rect x="141.2" y="388.2" width="41.2" height="69.3" class="est"/><text x="161.9" y="418.9" class="lb">E</text><text x="161.9" y="429.9" class="sb">23.6</text><rect x="182.5" y="388.2" width="66.0" height="69.3" class="dob"/><text x="215.5" y="418.9" class="lb">D</text><text x="215.5" y="429.9" class="sb">37.8</text><rect x="34.0" y="457.5" width="214.5" height="88.0" class="void"/><text x="141.2" y="504.5" class="lb">Vacío sobre patio hundido</text><rect x="34.0" y="97.8" width="214.5" height="13.2" class="circ"/><rect x="34.0" y="34.0" width="60.5" height="63.8" class="dob"/><text x="64.2" y="61.9" class="lb">D</text><text x="64.2" y="72.9" class="sb">31.9</text><rect x="94.5" y="34.0" width="38.5" height="63.8" class="est"/><text x="113.8" y="61.9" class="lb">E</text><text x="113.8" y="72.9" class="sb">20.3</text><rect x="133.0" y="34.0" width="38.5" height="63.8" class="est"/><text x="152.2" y="61.9" class="lb">E</text><text x="152.2" y="72.9" class="sb">20.3</text><rect x="171.5" y="34.0" width="38.5" height="63.8" class="est"/><text x="190.8" y="61.9" class="lb">E</text><text x="190.8" y="72.9" class="sb">20.3</text><rect x="210.0" y="34.0" width="38.5" height="63.8" class="est"/><text x="229.2" y="61.9" class="lb">E</text><text x="229.2" y="72.9" class="sb">20.3</text><rect x="34.0" y="305.7" width="56.1" height="69.3" class="dup"/><text x="62.0" y="336.4" class="lb">DX1</text><text x="62.0" y="347.4" class="sb">N4: 32.1</text><text x="62.0" y="356.4" class="sb">Tot. 64.3</text><rect x="81.3" y="306.8" width="7.7" height="17.6" class="core"/><rect x="192.4" y="309.0" width="56.1" height="66.0" class="dup"/><text x="220.4" y="338.0" class="lb">DX2</text><text x="220.4" y="349.0" class="sb">N4: 30.6</text><text x="220.4" y="358.0" class="sb">Tot. 61.2</text><rect x="239.7" y="310.1" width="7.7" height="17.6" class="core"/><rect x="34.0" y="388.2" width="66.0" height="69.3" class="dup"/><text x="67.0" y="418.9" class="lb">DX3</text><text x="67.0" y="429.9" class="sb">N4: 37.8</text><text x="67.0" y="438.9" class="sb">Tot. 75.6</text><rect x="91.2" y="389.3" width="7.7" height="17.6" class="core"/><rect x="100.0" y="388.2" width="41.2" height="69.3" class="dup"/><text x="120.6" y="418.9" class="lb">DX4</text><text x="120.6" y="429.9" class="sb">N4: 23.6</text><text x="120.6" y="438.9" class="sb">Tot. 47.2</text><rect x="132.4" y="389.3" width="7.7" height="17.6" class="core"/><rect x="141.2" y="388.2" width="41.2" height="69.3" class="dup"/><text x="161.9" y="418.9" class="lb">DX5</text><text x="161.9" y="429.9" class="sb">N4: 23.6</text><text x="161.9" y="438.9" class="sb">Tot. 47.2</text><rect x="173.7" y="389.3" width="7.7" height="17.6" class="core"/><rect x="182.5" y="388.2" width="66.0" height="69.3" class="dup"/><text x="215.5" y="418.9" class="lb">DX6</text><text x="215.5" y="429.9" class="sb">N4: 37.8</text><text x="215.5" y="438.9" class="sb">Tot. 75.6</text><rect x="239.7" y="389.3" width="7.7" height="17.6" class="core"/><line x1="34" y1="34" x2="248.5" y2="34" class="fac"/><text x="141.2" y="16" class="dim">Nivel 4 · Jr. Callao</text><text x="141.2" y="28" class="dim2">19.50 m</text><text x="24" y="289.8" class="dim2" transform="rotate(-90 24 289.8)">46.50 m</text></svg><figcaption><b>Nivel 4.</b> 18 unidades: 12 como en los niveles 2 y 3 y 6 dúplex (en lila) que suben a la azotea por una escalera interna. Cada dúplex lleva su código (DX1 a DX6), el área de este piso (N4) y su área total (Tot.).</figcaption></figure>
+    <figure><svg viewBox="0 0 282 580" role="img"><rect x="34.0" y="34.0" width="214.5" height="511.5" class="lot"/><rect x="34.0" y="34.0" width="214.5" height="77.0" class="circ"/><text x="141.2" y="75.5" class="lb">Techo del bloque frontal</text><rect x="34.0" y="111.0" width="56.1" height="66.0" class="core"/><text x="62.0" y="142.0" class="lb">Caja</text><text x="62.0" y="152.0" class="lb">escalera</text><rect x="34.0" y="177.0" width="69.3" height="128.7" class="com"/><text x="68.7" y="232.3" class="lb">Zona de</text><text x="68.7" y="242.3" class="lb">parrillas</text><text x="68.7" y="253.3" class="sb">74 m²</text><rect x="179.2" y="111.0" width="69.3" height="198.0" class="com"/><text x="213.9" y="201.0" class="lb">Terraza de</text><text x="213.9" y="211.0" class="lb">eventos</text><text x="213.9" y="222.0" class="sb">113 m²</text><rect x="103.3" y="111.0" width="75.9" height="264.0" class="void"/><text x="141.2" y="241.0" class="lb">Vacío</text><text x="141.2" y="251.0" class="lb">patio central</text><rect x="90.1" y="305.7" width="13.2" height="69.3" class="circ"/><rect x="179.2" y="309.0" width="13.2" height="66.0" class="circ"/><rect x="34.0" y="375.0" width="214.5" height="13.2" class="circ"/><rect x="34.0" y="305.7" width="56.1" height="69.3" class="dup"/><text x="62.0" y="336.4" class="lb">DX1</text><text x="62.0" y="347.4" class="sb">N5: 32.1</text><text x="62.0" y="356.4" class="sb">Tot. 64.3</text><rect x="81.3" y="306.8" width="7.7" height="17.6" class="core"/><rect x="192.4" y="309.0" width="56.1" height="66.0" class="dup"/><text x="220.4" y="338.0" class="lb">DX2</text><text x="220.4" y="349.0" class="sb">N5: 30.6</text><text x="220.4" y="358.0" class="sb">Tot. 61.2</text><rect x="239.7" y="310.1" width="7.7" height="17.6" class="core"/><rect x="34.0" y="388.2" width="66.0" height="69.3" class="dup"/><text x="67.0" y="418.9" class="lb">DX3</text><text x="67.0" y="429.9" class="sb">N5: 37.8</text><text x="67.0" y="438.9" class="sb">Tot. 75.6</text><rect x="91.2" y="389.3" width="7.7" height="17.6" class="core"/><rect x="100.0" y="388.2" width="41.2" height="69.3" class="dup"/><text x="120.6" y="418.9" class="lb">DX4</text><text x="120.6" y="429.9" class="sb">N5: 23.6</text><text x="120.6" y="438.9" class="sb">Tot. 47.2</text><rect x="132.4" y="389.3" width="7.7" height="17.6" class="core"/><rect x="141.2" y="388.2" width="41.2" height="69.3" class="dup"/><text x="161.9" y="418.9" class="lb">DX5</text><text x="161.9" y="429.9" class="sb">N5: 23.6</text><text x="161.9" y="438.9" class="sb">Tot. 47.2</text><rect x="173.7" y="389.3" width="7.7" height="17.6" class="core"/><rect x="182.5" y="388.2" width="66.0" height="69.3" class="dup"/><text x="215.5" y="418.9" class="lb">DX6</text><text x="215.5" y="429.9" class="sb">N5: 37.8</text><text x="215.5" y="438.9" class="sb">Tot. 75.6</text><rect x="239.7" y="389.3" width="7.7" height="17.6" class="core"/><rect x="34.0" y="457.5" width="214.5" height="88.0" class="void"/><text x="141.2" y="504.5" class="lb">Vacío sobre patio hundido</text><line x1="34" y1="34" x2="248.5" y2="34" class="fac"/><text x="141.2" y="16" class="dim">Nivel 5 · azotea +10.00</text><text x="141.2" y="28" class="dim2">19.50 m</text><text x="24" y="289.8" class="dim2" transform="rotate(-90 24 289.8)">46.50 m</text></svg><figcaption><b>Nivel 5 · azotea +10.00.</b> Piso superior de los 6 dúplex, zona de parrillas, terraza de eventos y caja de escalera. Cada dúplex muestra el área de este piso (N5) y su área total (Tot.).</figcaption></figure>
+  </div>
+  <div class="legend">
+    <span><i style="background:var(--c-est)"></i>E · estudio, 1 persona</span>
+    <span><i style="background:var(--c-dob)"></i>D · doble, 2 personas</span>
+    <span><i style="background:var(--c-com)"></i>Áreas comunes / recepción</span>
+    <span><i style="background:var(--c-shop)"></i>Comercio</span>
+    <span><i style="background:var(--c-park)"></i>Estacionamiento</span>
+    <span><i style="background:var(--c-circ)"></i>Galería / pasillo</span>
+    <span><i style="background:var(--c-core)"></i>Escalera / ascensor / montaautos</span>
+    <span><i style="background:var(--c-patio)"></i>Patio</span>
+    <span><i style="background:var(--c-dup)"></i>Dúplex</span>
+  </div>
+  <h3 class="sub3" style="font-family:var(--sans);font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin:8px 0 0">Áreas de los dúplex</h3>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Dúplex</th><th>Tipo</th><th>Nivel 4 (m²)</th><th>Nivel 5 (m²)</th><th>Total (m²)</th></tr></thead>
+    <tbody><tr><th>DX1</th><td>Doble, 2 personas</td><td class="n">32.1</td><td class="n">32.1</td><td class="n">64.3</td></tr><tr><th>DX2</th><td>Doble, 2 personas</td><td class="n">30.6</td><td class="n">30.6</td><td class="n">61.2</td></tr><tr><th>DX3</th><td>Doble, 2 personas</td><td class="n">37.8</td><td class="n">37.8</td><td class="n">75.6</td></tr><tr><th>DX4</th><td>Estudio, 1 persona</td><td class="n">23.6</td><td class="n">23.6</td><td class="n">47.2</td></tr><tr><th>DX5</th><td>Estudio, 1 persona</td><td class="n">23.6</td><td class="n">23.6</td><td class="n">47.2</td></tr><tr><th>DX6</th><td>Doble, 2 personas</td><td class="n">37.8</td><td class="n">37.8</td><td class="n">75.6</td></tr><tr class="tot"><th>Total</th><td></td><td class="n">185.6</td><td class="n">185.6</td><td class="n">371.2</td></tr></tbody>
+  </table></div>
+  <p class="small">Esquema a escala sobre un terreno simplificado de 19.50 × 46.50 m (907 m²). Las cifras dentro de cada unidad son su área en m².</p>
+</section>
+
+<section>
+  <span class="kicker">Corte</span>
+  <figure class="sectionfig"><svg viewBox="0 0 828 304" role="img"><rect x="100.0" y="242.5" width="465.0" height="39.8" class="park"/><text x="332.5" y="265.4" class="lb">Sótano −3.25 · estacionamientos</text><rect x="565.0" y="242.5" width="112.5" height="39.8" class="com"/><text x="621.2" y="265.4" class="lb">Áreas comunes</text><rect x="100.0" y="202.8" width="105.0" height="39.8" class="shop"/><text x="152.5" y="225.6" class="lb">1er nivel −0.60</text><rect x="205.0" y="202.8" width="360.0" height="39.8" class="est"/><text x="385.0" y="225.6" class="lb">1er nivel −0.60 · bloques laterales</text><rect x="565.0" y="202.8" width="112.5" height="39.8" class="dob"/><text x="621.2" y="225.6" class="lb">Fondo</text><rect x="100.0" y="163.0" width="105.0" height="39.8" class="dob"/><text x="152.5" y="185.9" class="lb">2do +2.05</text><rect x="205.0" y="163.0" width="360.0" height="39.8" class="est"/><text x="385.0" y="185.9" class="lb">2do +2.05 · bloques laterales</text><rect x="565.0" y="163.0" width="112.5" height="39.8" class="dob"/><text x="621.2" y="185.9" class="lb">Fondo</text><rect x="100.0" y="123.3" width="105.0" height="39.8" class="dob"/><text x="152.5" y="146.1" class="lb">3er +4.70</text><rect x="205.0" y="123.3" width="360.0" height="39.8" class="est"/><text x="385.0" y="146.1" class="lb">3er +4.70 · bloques laterales</text><rect x="565.0" y="123.3" width="112.5" height="39.8" class="dob"/><text x="621.2" y="146.1" class="lb">Fondo</text><rect x="100.0" y="83.5" width="105.0" height="39.8" class="dob"/><text x="152.5" y="106.4" class="lb">4to +7.35</text><rect x="205.0" y="83.5" width="360.0" height="39.8" class="est"/><text x="385.0" y="106.4" class="lb">4to +7.35 · bloques laterales</text><rect x="565.0" y="83.5" width="112.5" height="39.8" class="dob"/><text x="621.2" y="106.4" class="lb">Fondo</text><rect x="205.0" y="43.8" width="90.0" height="39.8" class="core"/><text x="250.0" y="66.6" class="lb">Caja escalera</text><rect x="470.5" y="43.8" width="94.5" height="39.8" class="dob"/><text x="517.8" y="66.6" class="lb">Dúplex</text><rect x="565.0" y="43.8" width="112.5" height="39.8" class="dob"/><text x="621.2" y="66.6" class="lb">Dúplex</text><rect x="677.5" y="280.0" width="120.0" height="2.2" class="patio"/><text x="737.5" y="203.5" class="lb">Patio hundido</text><text x="737.5" y="214.5" class="sb">abierto al cielo</text><text x="392.5" y="65.5" class="lb">Terraza común +10.00</text><line x1="94" y1="233.5" x2="102" y2="233.5" class="grd"/><line x1="94" y1="282.25" x2="803.5" y2="282.25" class="grd"/><line x1="94" y1="83.50000000000001" x2="803.5" y2="83.50000000000001" class="lim"/><text x="304.0" y="79.5" class="diml">Altura máxima 10 m (último techo)</text><line x1="100" y1="233.5" x2="100" y2="83.50000000000001" class="fac"/><line x1="92" y1="282.2" x2="100" y2="282.2" class="tick"/><text x="89" y="285.2" class="dimr">NPT −3.25 sótano</text><line x1="92" y1="242.5" x2="100" y2="242.5" class="tick"/><text x="89" y="245.5" class="dimr">NPT −0.60 nivel 1</text><line x1="92" y1="233.5" x2="100" y2="233.5" class="tick"/><text x="89" y="236.5" class="dimr">NPT ±0.00 vereda</text><line x1="92" y1="202.8" x2="100" y2="202.8" class="tick"/><text x="89" y="205.8" class="dimr">NPT +2.05 nivel 2</text><line x1="92" y1="163.0" x2="100" y2="163.0" class="tick"/><text x="89" y="166.0" class="dimr">NPT +4.70 nivel 3</text><line x1="92" y1="123.3" x2="100" y2="123.3" class="tick"/><text x="89" y="126.3" class="dimr">NPT +7.35 nivel 4</text><line x1="92" y1="83.5" x2="100" y2="83.5" class="tick"/><text x="89" y="86.5" class="dimr">NPT +10.00 azotea</text><line x1="677.5" y1="83.5" x2="685.5" y2="83.5" class="tick"/><text x="688.5" y="86.5" class="diml">NTT +10.00 techo nivel 4</text><line x1="677.5" y1="43.8" x2="685.5" y2="43.8" class="tick"/><text x="688.5" y="46.8" class="diml">NTT +12.65 techo dúplex y caja de escalera</text></svg><figcaption><b>Corte longitudinal.</b> Sótano a −3.25; primer nivel y patio central a −0.60; cuatro niveles de 2.65 m de piso a piso hasta el último techo a +10.00, la altura máxima. Sobre la azotea, al fondo, el segundo piso de los dúplex y la caja de escalera hasta +12.65.</figcaption></figure>
+</section>
+
+<section>
+  <span class="kicker">Unidades</span>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Tipo</th><th>Área (m²)</th><th>Para</th><th>Cantidad</th></tr></thead>
+    <tbody><tr><th>Estudio hacia la calle y el parque</th><td class="n">20.3</td><td>1 persona</td><td class="n">11</td></tr><tr><th>Doble hacia la calle y el parque</th><td class="n">31.9</td><td>2 personas</td><td class="n">3</td></tr><tr><th>Estudio en bloque lateral</th><td class="n">19.9</td><td>1 persona</td><td class="n">24</td></tr><tr><th>Doble en bloque lateral</th><td class="n">32.1</td><td>2 personas</td><td class="n">7</td></tr><tr><th>Doble en bloque lateral</th><td class="n">30.6</td><td>2 personas</td><td class="n">3</td></tr><tr><th>Estudio hacia el patio hundido</th><td class="n">23.6</td><td>1 persona</td><td class="n">6</td></tr><tr><th>Doble hacia el patio hundido</th><td class="n">37.8</td><td>2 personas</td><td class="n">6</td></tr><tr><th>Dúplex en bloque lateral (nivel 4 + azotea)</th><td class="n">64.3</td><td>2 personas</td><td class="n">1</td></tr><tr><th>Dúplex en bloque lateral (nivel 4 + azotea)</th><td class="n">61.2</td><td>2 personas</td><td class="n">1</td></tr><tr><th>Dúplex hacia el patio hundido, 1 persona</th><td class="n">47.2</td><td>1 persona</td><td class="n">2</td></tr><tr><th>Dúplex hacia el patio hundido, 2 personas</th><td class="n">75.6</td><td>2 personas</td><td class="n">2</td></tr><tr class="tot"><th>Total</th><td class="n">1,853</td><td>~89 personas</td><td class="n">66</td></tr></tbody>
+  </table></div>
+</section>
+
+<section>
+  <span class="kicker">Cuadro de áreas</span>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Concepto</th><th>Área</th></tr></thead>
+    <tbody>
+      <tr><th>Terreno (levantamiento)</th><td class="n">907 m²</td></tr>
+      <tr><th>Área libre: patio central + patio hundido</th><td class="n">166 + 156 = 322 m² · 35%</td></tr>
+      <tr><th>Área techada total (sótano + 4 niveles + azotea)</th><td class="n">~3,307 m²</td></tr>
+      <tr><th>Unidades de vivienda</th><td class="n">1,853 m²</td></tr>
+      <tr><th>Áreas comunes (sótano) y recepción</th><td class="n">~188 m²</td></tr>
+      <tr><th>Comercio (dos locales)</th><td class="n">70 m²</td></tr>
+      <tr><th>Estacionamientos</th><td class="n">18</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section>
+  <span class="kicker">Cumplimiento normativo</span>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Requisito</th><th>Exigencia</th><th>Cabida</th><th></th></tr></thead>
+    <tbody>
+      <tr><th>Área mínima por unidad</th><td>16 m² (A.020, art. 8.1a)</td><td>19.9 a 37.8 m²</td><td class="ok">Cumple</td></tr>
+      <tr><th>Altura máxima</th><td>10 m (certificado de parámetros)</td><td>Último techo a +10.00</td><td class="ok">Cumple</td></tr>
+      <tr><th>Dúplex y caja de escalera en azotea</th><td>Techar hasta 50% con retiro ≥ 2.50 m (A.020, art. 18.3)</td><td>~37%, a más de 7 m de la fachada, hasta +12.65</td><td class="q">Consultar con PROLIMA</td></tr>
+      <tr><th>Área libre</th><td>30% del lote</td><td>35%</td><td class="ok">Cumple</td></tr>
+      <tr><th>Luz y ventilación</th><td>Patios ≥ ~3.5 m (A.020, art. 11)</td><td>Central 6.90 m · hundido 8.00 m</td><td class="ok">Cumple</td></tr>
+      <tr><th>Altura libre</th><td>2.30 m vivienda y áreas comunes · 2.10 m estacionamiento</td><td>~2.45 m</td><td class="ok">Cumple</td></tr>
+      <tr><th>Estacionamientos</th><td>1 cada 4 viviendas + 1 por comercio = 18</td><td>18 en sótano</td><td class="ok">Cumple</td></tr>
+      <tr><th>Recorrido de evacuación</th><td>Máx. 56 m sin rociadores (A.020, cuadro 9, nota 11)</td><td>~47 m con una escalera</td><td class="ok">Cumple</td></tr>
+      <tr><th>Uso en ZTE-3</th><td>Residencial densidad media</td><td>Vivienda colectiva no figura expresamente</td><td class="q">Consultar</td></tr>
+      <tr><th>Ambientes mínimos (Ord. 2195, art. 474.3)</th><td>3 ambientes por vivienda</td><td>El estudio integra estar y descanso</td><td class="q">Consultar</td></tr>
+      <tr><th>Patio hundido como área libre</th><td>Área sin techar</td><td>Abierto al cielo, a −3.25</td><td class="q">Consultar</td></tr>
+      <tr><th>Portón vehicular en la fachada</th><td>Autorización de Cultura y PROLIMA</td><td>Vano para el montaautos</td><td class="q">Consultar</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section>
+  <span class="kicker">Lo que hay que cuidar</span>
+  <ul class="small" style="margin:0;padding-left:20px;display:grid;gap:6px">
+    <li>El sótano ocupa casi todo el lote, junto a medianeras de adobe en tres lados: hay que reforzar los cimientos vecinos durante la excavación (calzaduras).</li>
+    <li>El núcleo de escalera y ascensor está detrás del bloque frontal: todo el frente queda para departamentos con vista al parque. La escalera tiene un descanso a nivel de vereda con salida a la calle por el vestíbulo.</li>
+    <li>El ingreso desde la vereda baja solo 0.60 m a la recepción: una rampa corta (~6 m al 10%) resuelve la accesibilidad.</li>
+    <li>Dúplex sobre los 10 m: la A.020 (art. 18.1) dice que la azotea no forma parte de la altura de edificación y puede usarse sobre la altura máxima; el art. 18.3 permite techar hasta el 50% con un retiro de 2.50 m de la fachada. Los dúplex y la caja de escalera techan ~216 m² de ~585 m² (37%) y están a más de 7 m de la fachada.</li>
+    <li>El argumento ante PROLIMA: al estar al fondo, a +12.65, los dúplex no se ven desde la vereda del frente ni desde la plaza. Es lo que pide el reglamento del Centro Histórico para volúmenes posteriores. Aun así, PROLIMA y Cultura deben aceptarlo.</li>
+    <li>Lavandería de autoservicio con monedas y lavasecas (lavadora y secadora en un solo equipo): en ~30 m² entran unos 6 a 8 equipos. Necesita extracción de aire caliente hacia el patio hundido.</li>
+    <li>El ascensor no es obligatorio (A.020, art. 16: solo si el quinto piso supera los 12 m). Se mantiene por accesibilidad y comodidad.</li>
+    <li>El patio hundido tiene unos 14 m de alto hasta la azotea. Con 8 m de ancho cumple la norma, pero en anteproyecto conviene revisar cuánta luz directa recibe.</li>
+    <li>Montaautos: el auto entra de frente a nivel de vereda, la plataforma gira en el recorrido y el auto sale siempre de frente, abajo y arriba. Sobre él se deja ~2.60 m libres, por eso en el nivel 2 no hay unidad encima.</li>
+    <li>Terreno simplificado a rectángulo; hay que ajustarlo al lote irregular real.</li>
+    <li>Las cifras son de cabida preliminar, no de proyecto.</li>
+  </ul>
+</section>
+
+<footer>
+  <span>Jussef Liban · Jr. Callao 953–983, Cercado de Lima</span>
+  <span>Cabida preliminar · versión 4 · noviembre 2026</span>
+</footer>
+</div>
+</body>
+</html>
