@@ -793,9 +793,11 @@ svg .fz-in{font-size:11px;font-family:var(--sans);fill:var(--ink)}
   box(7.2, 12.3, FC.top, FC.top + 0.7, 0, 0.4, M.corn, F);                                 // remate central
   FC.balc.forEach(function(b){                                                              // balcones existentes
     box(b[0], b[1], FC.upA[0] - 0.2, FC.upA[0], -0.9, 0.4, M.corn, F);
-    box(b[0], b[1], FC.upA[0], FC.upA[0] + 0.95, -0.9, -0.85, M.rail, F);
-    box(b[0], b[0] + 0.05, FC.upA[0], FC.upA[0] + 0.95, -0.9, 0, M.rail, F);
-    box(b[1] - 0.05, b[1], FC.upA[0], FC.upA[0] + 0.95, -0.9, 0, M.rail, F);
+    var y0 = FC.upA[0], y1 = y0 + 0.95;
+    box(b[0], b[1], y1 - 0.05, y1, -0.9, -0.84, M.rail, F);                                // pasamanos
+    box(b[0], b[0] + 0.05, y1 - 0.05, y1, -0.9, 0, M.rail, F); box(b[1] - 0.05, b[1], y1 - 0.05, y1, -0.9, 0, M.rail, F);
+    for (var x = b[0]; x <= b[1] + 0.001; x += 0.16) box(x, x + 0.025, y0, y1, -0.885, -0.86, M.rail, F);   // barrotes
+    for (var z = -0.9; z <= 0.001; z += 0.16) { box(b[0], b[0] + 0.025, y0, y1, z, z + 0.025, M.rail, F); box(b[1] - 0.025, b[1], y0, y1, z, z + 0.025, M.rail, F); }
   });
 
   // ---- vistas ----
