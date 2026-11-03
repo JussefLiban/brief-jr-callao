@@ -223,11 +223,13 @@ td.pr,td.prs{font-family:var(--mono);text-align:right;white-space:nowrap}
       <button type="button" data-v="aerea">Vista aérea</button>
       <button type="button" data-v="fondo">Desde el fondo</button>
       <button type="button" data-v="vacio">Mirar el vacío</button>
+      <label for="mq-fa"><input type="radio" name="mqfac" id="mq-fa" value="nueva" checked> Fachada nueva (4 niveles)</label>
+      <label for="mq-fb"><input type="radio" name="mqfac" id="mq-fb" value="orig"> Fachada original con lofts</label>
       <label for="mq-front"><input type="checkbox" id="mq-front"> Quitar fachada y bloque frontal</label>
       <label for="mq-ctx"><input type="checkbox" id="mq-ctx" checked> Vecinos y calle</label>
     </div>
   </div>
-  <p class="small">Colores: blanco y ocre = fachada nueva que reinterpreta la original · beige = departamentos · lila = dúplex en la azotea · gris = escalera, ascensor y montaautos · verde = terrazas del patio hundido · madera = terrazas comunes.</p>
+  <p class="small">Colores: blanco y ocre = fachada (nueva o la original, según el selector) · beige = departamentos · lila = dúplex en la azotea · gris = escalera, ascensor y montaautos · verde = terrazas del patio hundido · madera = terrazas comunes.</p>
 </section>
 
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
@@ -263,8 +265,8 @@ td.pr,td.prs{font-family:var(--mono);text-align:right;white-space:nowrap}
     nb: mat(0xc9c2b5), nb2: mat(0xbdb5a6), station: mat(0xa8584a), tree: mat(0x5f8f4e), trunk: mat(0x6b5a45),
     glass: mat(0x3d5966, 0.85), rail: mat(0x2f3537), shop: mat(0x8a6a4a)
   };
-  var groups = {front: new THREE.Group(), ctx: new THREE.Group(), bld: new THREE.Group()};
-  scene.add(groups.front); scene.add(groups.ctx); scene.add(groups.bld);
+  var groups = {front: new THREE.Group(), orig: new THREE.Group(), ctx: new THREE.Group(), bld: new THREE.Group()};
+  scene.add(groups.front); scene.add(groups.orig); scene.add(groups.ctx); scene.add(groups.bld);
 
   // caja por esquinas: x0..x1, y0..y1, z0..z1
   function box(x0, x1, y0, y1, z0, z1, m, g){
@@ -375,6 +377,37 @@ td.pr,td.prs{font-family:var(--mono);text-align:right;white-space:nowrap}
   [[0.5, 3.0], [3.9, 7.1], [11.5, 19.0]].forEach(function(r){ box(r[0], r[1], -0.6, 0.0, -0.9, 0.4, M.walk, F); });   // escalones al medio nivel
   up.forEach(function(h){ box(h[0], h[1], h[2], h[3], 0.2, 0.25, M.glass, F); box(h[0], h[1], h[2] + 0.95, h[2] + 1.0, -0.04, 0.0, M.rail, F); });  // baranda al ras
 
+  // ---- variante: fachada original con tiendas de doble altura y lofts dúplex ----
+  var G = groups.orig;
+  box(0, 3.5, -0.6, 4.5, 0.4, P.FRONT, M.unitL, G);                         // recepción de doble altura
+  box(3.5, 7.5, -0.6, 4.5, 0.4, P.FRONT, M.shop, G);                        // comercio A doble altura
+  box(11, W, -0.6, 4.5, 0.4, P.FRONT, M.shop, G);                           // comercio B doble altura
+  box(0, W, 4.5, 4.7, 0.4, P.FRONT, M.slab, G);
+  [0, 6.5, 13.0].forEach(function(x0, i){
+    box(x0 + 0.05, x0 + 6.45, 4.7, 9.8, 0.4, P.FRONT_U, i % 2 ? M.unit : M.unitL, G);   // loft de doble altura
+    box(x0 + 0.05, x0 + 6.45, 7.15, 7.35, 3.0, P.FRONT_U, M.slab, G);                    // mezanine retirado
+  });
+  box(0, W, 4.5, 4.7, P.FRONT_U, P.FRONT, M.slab, G);
+  box(0, W, 7.15, 7.35, P.FRONT_U, P.FRONT, M.slab, G);
+  box(0, W, 9.8, 10, 0.4, P.FRONT, M.slab, G);
+  function facadeO(y0, y1, holes, mm){
+    var sh = new THREE.Shape();
+    sh.moveTo(0, y0); sh.lineTo(W, y0); sh.lineTo(W, y1); sh.lineTo(0, y1); sh.lineTo(0, y0);
+    holes.forEach(function(h){ var p = new THREE.Path(); p.moveTo(h[0], h[2]); p.lineTo(h[1], h[2]); p.lineTo(h[1], h[3]); p.lineTo(h[0], h[3]); p.lineTo(h[0], h[2]); sh.holes.push(p); });
+    var me = new THREE.Mesh(new THREE.ExtrudeGeometry(sh, {depth: 0.4, bevelEnabled: false}), mm); me.castShadow = true; me.receiveShadow = true; G.add(me);
+  }
+  var lowO = [[0.5, 2.9, 0.1, 2.8], [3.9, 7.1, 0.1, 2.8], [7.7, 10.8, 0.1, 3.2], [11.5, 19.0, 0.1, 2.8]];
+  facadeO(0, 4.4, lowO, M.facLow);
+  var upO = []; for (var k = 0; k < 8; k++) { var xx = 1.0 + k * 2.35; upO.push([xx, xx + 1.0, 5.3, 7.3]); }
+  facadeO(4.4, 9.4, upO, M.facUp);
+  box(-0.1, W + 0.1, 4.25, 4.55, -0.25, 0.4, M.corn, G);
+  box(-0.1, W + 0.1, 9.3, 9.8, -0.3, 0.4, M.corn, G);
+  box(7.2, 12.3, 9.8, 10.6, 0, 0.4, M.corn, G);
+  [[1.9, 4.2], [8.9, 11.0], [15.8, 18.0]].forEach(function(b){ box(b[0], b[1], 4.6, 4.85, -0.9, 0.4, M.corn, G); box(b[0], b[1], 4.85, 5.75, -0.9, -0.85, M.rail, G); });
+  lowO.forEach(function(h, i){ box(h[0], h[1], h[2], h[3], 0.15, 0.2, i === 2 ? M.shop : M.glass, G); });
+  upO.forEach(function(h){ box(h[0], h[1], h[2], h[3], 0.2, 0.25, M.glass, G); });
+  G.visible = false;
+
   // ---- vistas ----
   var V = {
     plaza: [[W + 13, 7.5, -11], [W / 2, 5, 4]],
@@ -384,7 +417,8 @@ td.pr,td.prs{font-family:var(--mono);text-align:right;white-space:nowrap}
   };
   function view(k){ var v = V[k]; cam.position.set(v[0][0], v[0][1], v[0][2]); ctl.target.set(v[1][0], v[1][1], v[1][2]); ctl.update(); }
   document.querySelectorAll('.mq-bar button').forEach(function(b){ b.addEventListener('click', function(){ view(b.dataset.v); }); });
-  document.getElementById('mq-front').addEventListener('change', function(e){ groups.front.visible = !e.target.checked; });
+  function fac(){ var o = document.getElementById('mq-fb').checked, off = document.getElementById('mq-front').checked; groups.front.visible = !off && !o; groups.orig.visible = !off && o; }
+  ['mq-fa', 'mq-fb', 'mq-front'].forEach(function(id){ document.getElementById(id).addEventListener('change', fac); });
   document.getElementById('mq-ctx').addEventListener('change', function(e){ groups.ctx.visible = e.target.checked; });
   view('plaza');
 
