@@ -111,6 +111,16 @@ footer{margin-top:52px;padding-top:14px;border-top:1px solid var(--line);font-si
   .three,.plans{grid-template-columns:1fr}
 }
 
+.mq-wrap{position:relative;background:var(--surface);border:1px solid var(--line)}
+#mq{width:100%;height:560px;display:block;touch-action:none}
+.mq-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 12px;border-top:1px solid var(--line)}
+.mq-bar button{font:600 13px var(--sans);padding:7px 12px;border:1px solid var(--line);background:var(--ground);color:var(--ink);border-radius:3px;cursor:pointer}
+.mq-bar button:hover{border-color:var(--accent)}
+.mq-bar button:focus-visible,.mq-bar input:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.mq-bar label{font-size:13px;color:var(--muted);display:inline-flex;gap:6px;align-items:center;margin-left:6px}
+.mq-msg{position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);font-size:14px;pointer-events:none}
+@media (max-width:760px){#mq{height:420px}}
+
 .am-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
 .am-card{margin:0;background:var(--surface);border:1px solid var(--line);padding:14px;display:grid;gap:8px;align-content:start}
 .am-card h3{margin:0;font-family:var(--serif);font-weight:400;font-size:18px}
@@ -200,6 +210,181 @@ td.pr,td.prs{font-family:var(--mono);text-align:right;white-space:nowrap}
   <span class="kicker">Corte</span>
   <figure class="sectionfig"><svg viewBox="0 0 828 324" role="img"><rect x="100.0" y="262.0" width="516.6" height="39.8" class="park"/><text x="358.3" y="284.9" class="lb">Sótano −3.25 · estacionamientos</text><rect x="616.6" y="262.0" width="112.5" height="39.8" class="dob"/><text x="672.8" y="284.9" class="lb">Departamentos</text><rect x="100.0" y="222.2" width="105.0" height="39.8" class="shop"/><text x="152.5" y="245.1" class="lb">1er nivel −0.60</text><rect x="205.0" y="222.2" width="411.6" height="39.8" class="est"/><text x="410.8" y="245.1" class="lb">1er nivel −0.60 · bloques laterales</text><rect x="616.6" y="222.2" width="112.5" height="39.8" class="dob"/><text x="672.8" y="245.1" class="lb">Fondo</text><rect x="100.0" y="182.5" width="105.0" height="39.8" class="dob"/><text x="152.5" y="205.4" class="lb">2do +2.05</text><rect x="205.0" y="182.5" width="411.6" height="39.8" class="est"/><text x="410.8" y="205.4" class="lb">2do +2.05 · bloques laterales</text><rect x="616.6" y="182.5" width="112.5" height="39.8" class="dob"/><text x="672.8" y="205.4" class="lb">Fondo</text><rect x="100.0" y="142.8" width="105.0" height="39.8" class="dob"/><text x="152.5" y="165.6" class="lb">3er +4.70</text><rect x="205.0" y="142.8" width="411.6" height="39.8" class="est"/><text x="410.8" y="165.6" class="lb">3er +4.70 · bloques laterales</text><rect x="616.6" y="142.8" width="112.5" height="39.8" class="dob"/><text x="672.8" y="165.6" class="lb">Fondo</text><rect x="100.0" y="103.0" width="105.0" height="39.8" class="dob"/><text x="152.5" y="125.9" class="lb">4to +7.35</text><rect x="205.0" y="103.0" width="411.6" height="39.8" class="est"/><text x="410.8" y="125.9" class="lb">4to +7.35 · bloques laterales</text><rect x="616.6" y="103.0" width="112.5" height="39.8" class="dob"/><text x="672.8" y="125.9" class="lb">Fondo</text><rect x="205.0" y="63.2" width="90.0" height="39.8" class="core"/><text x="250.0" y="86.1" class="lb">Escalera y ascensor</text><rect x="205.0" y="46.0" width="37.5" height="17.2" class="core"/><line x1="205.0" y1="46.0" x2="197.0" y2="46.0" class="tick"/><text x="194.0" y="49.0" class="dimr">NTT +13.80 sobrerrecorrido del ascensor (aprox.)</text><rect x="529.0" y="63.2" width="87.6" height="39.8" class="dob"/><text x="572.8" y="86.1" class="lb">Dúplex</text><rect x="616.6" y="63.2" width="112.5" height="39.8" class="dob"/><text x="672.8" y="86.1" class="lb">Dúplex</text><rect x="729.1" y="299.5" width="68.4" height="2.2" class="patio"/><text x="763.3" y="223.0" class="lb">Terrazas S01 a S04</text><text x="763.3" y="234.0" class="sb">abierto al cielo</text><text x="392.5" y="85.0" class="lb">Terraza común +10.00</text><line x1="94" y1="253.0" x2="102" y2="253.0" class="grd"/><line x1="94" y1="301.75" x2="803.5" y2="301.75" class="grd"/><line x1="94" y1="103.0" x2="803.5" y2="103.0" class="lim"/><text x="304.0" y="99.0" class="diml">Altura máxima 10 m (último techo)</text><line x1="100" y1="253.0" x2="100" y2="103.0" class="fac"/><line x1="92" y1="301.8" x2="100" y2="301.8" class="tick"/><text x="89" y="304.8" class="dimr">NPT −3.25 sótano</text><line x1="92" y1="262.0" x2="100" y2="262.0" class="tick"/><text x="89" y="265.0" class="dimr">NPT −0.60 nivel 1</text><line x1="92" y1="253.0" x2="100" y2="253.0" class="tick"/><text x="89" y="256.0" class="dimr">NPT ±0.00 vereda</text><line x1="92" y1="222.2" x2="100" y2="222.2" class="tick"/><text x="89" y="225.2" class="dimr">NPT +2.05 nivel 2</text><line x1="92" y1="182.5" x2="100" y2="182.5" class="tick"/><text x="89" y="185.5" class="dimr">NPT +4.70 nivel 3</text><line x1="92" y1="142.8" x2="100" y2="142.8" class="tick"/><text x="89" y="145.8" class="dimr">NPT +7.35 nivel 4</text><line x1="92" y1="103.0" x2="100" y2="103.0" class="tick"/><text x="89" y="106.0" class="dimr">NPT +10.00 azotea</text><line x1="729.1" y1="103.0" x2="737.1" y2="103.0" class="tick"/><text x="740.1" y="106.0" class="diml">NTT +10.00 techo nivel 4</text><line x1="729.1" y1="63.2" x2="737.1" y2="63.2" class="tick"/><text x="740.1" y="66.2" class="diml">NTT +12.65 techo dúplex y caja de escalera</text></svg><figcaption><b>Corte longitudinal.</b> Sótano a −3.25; primer nivel a −0.60; el vacío central baja abierto hasta el sótano; cuatro niveles de 2.65 m de piso a piso hasta el último techo a +10.00, la altura máxima. Sobre la azotea, al fondo, el segundo piso de los dúplex y la caja de escalera hasta +12.65.</figcaption></figure>
 </section>
+
+<section id="maqueta">
+  <span class="kicker">Maqueta 3D</span>
+  <h2>El edificio en volumen</h2>
+  <p class="small">Arrastra para girar, rueda o pellizca para acercar, clic derecho o dos dedos para desplazar. Volúmenes esquemáticos a escala; no es un render.</p>
+  <div class="mq-wrap">
+    <canvas id="mq" aria-label="Maqueta 3D del edificio"></canvas>
+    <div class="mq-msg" id="mq-msg">Cargando maqueta…</div>
+    <div class="mq-bar">
+      <button type="button" data-v="plaza">Desde la calle</button>
+      <button type="button" data-v="aerea">Vista aérea</button>
+      <button type="button" data-v="fondo">Desde el fondo</button>
+      <button type="button" data-v="vacio">Mirar el vacío</button>
+      <label for="mq-front"><input type="checkbox" id="mq-front"> Quitar fachada y bloque frontal</label>
+      <label for="mq-ctx"><input type="checkbox" id="mq-ctx" checked> Vecinos y calle</label>
+    </div>
+  </div>
+  <p class="small">Colores: blanco y ocre = fachada restituida · beige = departamentos · lila = dúplex en la azotea · gris = escalera, ascensor y montaautos · verde = terrazas del patio hundido · madera = terrazas comunes.</p>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+(function(){
+  var P = {"W": 19.5, "D": 46.5, "BAR": 5.1, "FRONT": 7.0, "FRONT_U": 5.8, "PX0": 6.3, "PX1": 13.200000000000001, "YRG0": 34.44, "YRG1": 35.64, "YRU1": 41.94, "yl": 28.6, "yr": 28.22, "levels": [-0.6, 2.05, 4.7, 7.35], "cars": [[0.35, 13.3], [0.35, 15.700000000000001], [0.35, 18.1], [0.35, 20.5], [0.35, 22.900000000000002], [0.35, 25.3], [0.35, 27.7], [0.35, 30.1], [11.35, 12.600000000000001], [11.35, 15.000000000000002], [11.35, 17.400000000000002], [11.35, 19.8], [11.35, 22.2], [11.35, 24.6], [11.35, 27.0], [11.35, 29.400000000000002], [11.35, 31.8]]};
+  var cv = document.getElementById('mq'), msg = document.getElementById('mq-msg');
+  if (!window.THREE || !THREE.OrbitControls) { msg.textContent = 'La maqueta necesita internet para cargar la librería 3D.'; return; }
+  msg.remove();
+  var W = P.W, D = P.D;
+  var renderer = new THREE.WebGLRenderer({canvas: cv, antialias: true});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.shadowMap.enabled = true;
+  var scene = new THREE.Scene();
+  scene.background = new THREE.Color(0xdfe7ea);
+  var cam = new THREE.PerspectiveCamera(40, 1, 0.5, 600);
+  var ctl = new THREE.OrbitControls(cam, cv);
+  ctl.enableDamping = true; ctl.target.set(W / 2, 3, D / 2);
+
+  scene.add(new THREE.HemisphereLight(0xffffff, 0x8a8f86, 0.75));
+  var sun = new THREE.DirectionalLight(0xffffff, 0.75);
+  sun.position.set(-40, 70, -30); sun.castShadow = true;
+  sun.shadow.mapSize.set(2048, 2048);
+  var sc = sun.shadow.camera; sc.left = -60; sc.right = 60; sc.top = 60; sc.bottom = -60; sc.far = 220;
+  sun.target.position.set(W / 2, 0, D / 2); scene.add(sun); scene.add(sun.target);
+
+  function mat(c, o){ var m = new THREE.MeshLambertMaterial({color: c}); if (o !== undefined){ m.transparent = true; m.opacity = o; } return m; }
+  var M = {
+    unit: mat(0xeedcb8), unitL: mat(0xe2d0aa), slab: mat(0xc9cdc8), dup: mat(0xcbbde3), core: mat(0x7d8a8f),
+    facLow: mat(0xf2efe8), facUp: mat(0xd9a660), corn: mat(0xe9e4da), wood: mat(0xb98b5e), green: mat(0x9fbf86),
+    park: mat(0xd8dbd6), car: mat(0x5d7a8c), car2: mat(0xa04c3c), street: mat(0x6f7477), walk: mat(0xbdbcb6),
+    nb: mat(0xc9c2b5), nb2: mat(0xbdb5a6), station: mat(0xa8584a), tree: mat(0x5f8f4e), trunk: mat(0x6b5a45),
+    glass: mat(0x3d5966, 0.85), rail: mat(0x2f3537), shop: mat(0x8a6a4a)
+  };
+  var groups = {front: new THREE.Group(), ctx: new THREE.Group(), bld: new THREE.Group()};
+  scene.add(groups.front); scene.add(groups.ctx); scene.add(groups.bld);
+
+  // caja por esquinas: x0..x1, y0..y1, z0..z1
+  function box(x0, x1, y0, y1, z0, z1, m, g){
+    var geo = new THREE.BoxGeometry(Math.max(x1 - x0, 0.01), Math.max(y1 - y0, 0.01), Math.max(z1 - z0, 0.01));
+    var me = new THREE.Mesh(geo, m); me.position.set((x0 + x1) / 2, (y0 + y1) / 2, (z0 + z1) / 2);
+    me.castShadow = true; me.receiveShadow = true; (g || groups.bld).add(me);
+    var ed = new THREE.LineSegments(new THREE.EdgesGeometry(geo), new THREE.LineBasicMaterial({color: 0x3a4549, transparent: true, opacity: 0.35}));
+    ed.position.copy(me.position); (g || groups.bld).add(ed);
+    return me;
+  }
+
+  var L = P.levels, H = 2.65, T = 0.2;
+  // ---- contexto: calle, vereda, vecinos, estación y plaza ----
+  box(-40, 60, -0.3, 0, -12, 0, M.street, groups.ctx);
+  box(-40, 60, -0.3, 0.12, -2, 0, M.walk, groups.ctx);
+  box(-40, 0, -0.3, 6.5, 0, 52, M.nb, groups.ctx);
+  box(W, 60, -0.3, 5.5, 0, 52, M.nb2, groups.ctx);
+  box(-40, 60, -0.3, 6.0, D, 62, M.nb, groups.ctx);
+  box(-45, 18, 0, 6, -40, -16, M.station, groups.ctx);
+  box(28, 60, -0.02, 0.15, -30, -14, M.green, groups.ctx);
+  [[34,-18],[40,-22],[46,-17],[52,-25],[37,-27],[49,-29]].forEach(function(t){
+    box(t[0]-0.2, t[0]+0.2, 0, 3, t[1]-0.2, t[1]+0.2, M.trunk, groups.ctx);
+    var s = new THREE.Mesh(new THREE.SphereGeometry(2.6, 12, 10), M.tree); s.position.set(t[0], 4.6, t[1]); s.castShadow = true; groups.ctx.add(s);
+  });
+
+  // ---- sótano: piso, estacionamientos, autos, montaautos ----
+  box(0, W, -3.45, -3.25, 0, D, M.slab);
+  box(5, 11, -3.25, -3.2, 0, P.YRG0, M.park);
+  P.cars.forEach(function(c, i){ box(c[0], c[0] + 4.3, -3.25, -1.85, c[1], c[1] + 1.8, i % 3 ? M.car : M.car2); });
+  box(7.5, 11, -3.25, 0, 0, 6.5, M.core);
+  // terrazas del patio hundido (verde) con divisiones
+  box(0, W, -3.25, -3.15, P.YRU1, D, M.green);
+  [6, 9.75, 13.5].forEach(function(x){ box(x - 0.05, x + 0.05, -3.15, -2.1, P.YRU1, D, M.rail); });
+
+  // ---- bloques laterales y del fondo (4 niveles) ----
+  L.forEach(function(y, i){
+    box(0, P.BAR, y, y + H - T, P.FRONT, P.YRG0, i % 2 ? M.unit : M.unitL);       // bloque izquierdo
+    box(W - P.BAR, W, y, y + H - T, P.FRONT, P.YRG0, i % 2 ? M.unitL : M.unit);   // bloque derecho
+    box(0, W, y, y + H - T, P.YRG1, P.YRU1, i % 2 ? M.unit : M.unitL);            // fondo
+    // losas de galerías y barandas
+    box(P.BAR, P.PX0, y - T, y, P.FRONT, P.YRG0, M.slab);
+    box(P.PX1, W - P.BAR, y - T, y, P.FRONT, P.YRG0, M.slab);
+    box(0, W, y - T, y, P.YRG0, P.YRG1, M.slab);
+    box(P.PX0 - 0.05, P.PX0, y, y + 1.0, P.FRONT, P.YRG0, M.rail);
+    box(P.PX1, P.PX1 + 0.05, y, y + 1.0, P.FRONT, P.YRG0, M.rail);
+    // franjas de ventanas hacia el vacío
+    box(P.BAR - 0.02, P.BAR + 0.01, y + 0.9, y + 2.1, P.FRONT + 6.2, P.YRG0 - 0.3, M.glass);
+    box(W - P.BAR - 0.01, W - P.BAR + 0.02, y + 0.9, y + 2.1, P.FRONT + 0.3, P.YRG0 - 0.3, M.glass);
+    box(0.3, W - 0.3, y + 0.9, y + 2.1, P.YRU1 - 0.01, P.YRU1 + 0.02, M.glass);
+  });
+  box(0, W, -3.25, -0.6 - T, P.YRG1, P.YRU1, M.unitL);          // departamentos del sótano S01-S04
+  box(0.3, W - 0.3, -2.4, -1.2, P.YRU1 - 0.01, P.YRU1 + 0.02, M.glass);
+  // núcleo de escalera y ascensor
+  box(0, P.BAR, -3.25, 10 + H, P.FRONT, P.FRONT + 6, M.core);
+  box(0, 2.5, 10 + H, 13.8, P.FRONT, P.FRONT + 2.5, M.core);
+  // techos a +10
+  box(0, P.PX0, 9.8, 10, P.FRONT, P.YRG0, M.slab);
+  box(P.PX1, W, 9.8, 10, P.FRONT, P.YRG0, M.slab);
+  box(0, W, 9.8, 10, P.YRG0, P.YRU1, M.slab);
+  // azotea: terrazas comunes (madera) y dúplex (lila)
+  box(0, P.PX0, 10, 10.08, P.FRONT + 6, P.yl, M.wood);
+  box(P.PX1, W, 10, 10.08, P.FRONT, P.yr, M.wood);
+  box(0, P.BAR, 10, 10 + H, P.yl, P.YRG0, M.dup);
+  box(W - P.BAR, W, 10, 10 + H, P.yr, P.YRG0, M.dup);
+  box(0, W, 10, 10 + H, P.YRG1, P.YRU1, M.dup);
+  box(0.3, W - 0.3, 10.9, 12.1, P.YRU1 - 0.01, P.YRU1 + 0.02, M.glass);
+  // barandas de azotea
+  box(0, P.PX0, 10, 11.1, P.FRONT + 6 - 0.04, P.FRONT + 6, M.rail);
+
+  // ---- bloque frontal y fachada restituida (grupo que se puede ocultar) ----
+  var F = groups.front;
+  L.forEach(function(y, i){
+    if (i === 0) {
+      box(0, 3.5, y, y + H - T, 0.4, P.FRONT, M.unitL, F);                  // recepción
+      box(3.5, 7.5, y, y + H - T, 0.4, P.FRONT, M.shop, F);                 // comercio A
+      box(11, W, y, y + H - T, 0.4, P.FRONT, M.shop, F);                    // comercio B
+    } else {
+      box(0, W, y, y + H - T, 0.4, P.FRONT_U, i % 2 ? M.unit : M.unitL, F);
+      box(0, W, y - T, y, P.FRONT_U, P.FRONT, M.slab, F);
+    }
+  });
+  box(0, W, 9.8, 10, 0.4, P.FRONT, M.slab, F);
+  box(7.5, 11, 0, 9.8, 0.4, P.FRONT, M.core, F).visible = false;
+  // fachada: planta baja (blanca) con vanos y planta alta (ocre) con ventanas
+  function facade(y0, y1, holes, m){
+    var sh = new THREE.Shape();
+    sh.moveTo(0, y0); sh.lineTo(W, y0); sh.lineTo(W, y1); sh.lineTo(0, y1); sh.lineTo(0, y0);
+    holes.forEach(function(h){ var p = new THREE.Path(); p.moveTo(h[0], h[2]); p.lineTo(h[1], h[2]); p.lineTo(h[1], h[3]); p.lineTo(h[0], h[3]); p.lineTo(h[0], h[2]); sh.holes.push(p); });
+    var geo = new THREE.ExtrudeGeometry(sh, {depth: 0.4, bevelEnabled: false});
+    var me = new THREE.Mesh(geo, m); me.position.z = 0; me.castShadow = true; me.receiveShadow = true; F.add(me);
+  }
+  var low = [[0.5, 2.9, 0.1, 2.7], [3.9, 7.1, 0.1, 2.8], [7.7, 10.8, 0.1, 3.0], [11.5, 19.0, 0.1, 2.8]];
+  facade(0, 4.4, low, M.facLow);
+  var up = []; for (var i = 0; i < 8; i++) { var x = 1.0 + i * 2.35; up.push([x, x + 1.0, 5.3, 7.3]); }
+  facade(4.4, 9.4, up, M.facUp);
+  box(-0.1, W + 0.1, 4.25, 4.55, -0.25, 0.4, M.corn, F);
+  box(-0.1, W + 0.1, 9.3, 9.8, -0.3, 0.4, M.corn, F);
+  box(7.2, 12.3, 9.8, 10.6, 0, 0.4, M.corn, F);                            // remate central
+  [[1.9, 4.2], [8.9, 11.0], [15.8, 18.0]].forEach(function(b){ box(b[0], b[1], 4.6, 4.85, -0.9, 0.4, M.corn, F); box(b[0], b[1], 4.85, 5.75, -0.9, -0.85, M.rail, F); });
+  low.forEach(function(h, i){ box(h[0], h[1], h[2], h[3], 0.15, 0.2, i === 2 ? M.shop : M.glass, F); });
+  up.forEach(function(h){ box(h[0], h[1], h[2], h[3], 0.2, 0.25, M.glass, F); });
+
+  // ---- vistas ----
+  var V = {
+    plaza: [[W + 13, 7.5, -11], [W / 2, 5, 4]],
+    aerea: [[W / 2 + 42, 62, D / 2 - 8], [W / 2, 0, D / 2]],
+    fondo: [[W / 2 - 30, 26, D + 32], [W / 2, 2, D / 2]],
+    vacio: [[W / 2, 15.5, P.FRONT + 1.5], [W / 2, -3, P.YRG0]]
+  };
+  function view(k){ var v = V[k]; cam.position.set(v[0][0], v[0][1], v[0][2]); ctl.target.set(v[1][0], v[1][1], v[1][2]); ctl.update(); }
+  document.querySelectorAll('.mq-bar button').forEach(function(b){ b.addEventListener('click', function(){ view(b.dataset.v); }); });
+  document.getElementById('mq-front').addEventListener('change', function(e){ groups.front.visible = !e.target.checked; });
+  document.getElementById('mq-ctx').addEventListener('change', function(e){ groups.ctx.visible = e.target.checked; });
+  view('plaza');
+
+  function resize(){ var w = cv.clientWidth, h = cv.clientHeight; if (cv.width !== Math.floor(w * renderer.getPixelRatio()) || cv.height !== Math.floor(h * renderer.getPixelRatio())) { renderer.setSize(w, h, false); cam.aspect = w / h; cam.updateProjectionMatrix(); } }
+  (function loop(){ resize(); ctl.update(); renderer.render(scene, cam); requestAnimationFrame(loop); })();
+})();
+</script>
+
 
 <section>
   <span class="kicker">Unidades</span>
