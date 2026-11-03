@@ -404,11 +404,11 @@ svg .rail{stroke:#2f3537;stroke-width:1.6;stroke-dasharray:2 2}
       <label>Terraza no techada: % del precio de venta<input data-k="p_ter" type="number" step="5" value="30"></label>
       <label>Comercio: veces el precio de venta<input data-k="p_com" type="number" step="0.1" value="1.5"></label>
       <label>Precio por estacionamiento (S/, 0 si no se venden)<input data-k="p_est" type="number" step="1000" value="30000"></label>
-      <label>Costo de construcción por m² techado (S/)<input data-k="c_m2" type="number" step="50" value="2100"></label>
-      <label>Sobrecosto de la bajada de la torre por m² (excavación de 1.30 m, muros de contención) (S/)<input data-k="c_baj" type="number" step="50" value="0"></label>
+      <label>Costo de construcción por m² techado, acabados básicos (S/)<input data-k="c_m2" type="number" step="50" value="1900"></label>
+      <label>Partidas aparte por m² de la torre: calzaduras junto al adobe, excavación y muros de contención (S/)<input data-k="c_baj" type="number" step="50" value="200"></label>
       <label>Indirectos: % del costo de construcción<input data-k="c_ind" type="number" step="1" value="15"></label>
       <label>Comercialización: % de las ventas<input data-k="c_ven" type="number" step="0.5" value="3"></label>
-      <label>Terreno según tasación (US$)<input data-k="c_ter" type="number" step="10000" value="1025970"></label>
+      <label>Terreno, valor de trabajo (US$)<input data-k="c_ter" type="number" step="10000" value="600000"></label>
       <label>Tipo de cambio (S/ por US$)<input data-k="t_c" type="number" step="0.01" value="3.5"></label>
     </div>
     <div class="eco-out">
@@ -418,15 +418,15 @@ svg .rail{stroke:#2f3537;stroke-width:1.6;stroke-dasharray:2 2}
       <div><span>Venta de estacionamientos (0 · sin estacionamientos)</span><b data-o="est"></b></div>
       <div class="sum"><span>Ventas totales</span><b data-o="vt"></b></div>
       <div><span>Costo de construcción (3,316 m² techados)</span><b data-o="cc"></b></div>
-      <div><span>Sobrecosto de la bajada de la torre (614 m²)</span><b data-o="sc"></b></div>
+      <div><span>Calzaduras, excavación y muros de la torre (614 m²)</span><b data-o="sc"></b></div>
       <div><span>Indirectos (proyecto, licencias, supervisión, gerencia)</span><b data-o="in"></b></div>
       <div><span>Comercialización</span><b data-o="cv"></b></div>
-      <div><span>Terreno (tasación 2021)</span><b data-o="tr"></b></div>
+      <div><span>Terreno (valor de trabajo)</span><b data-o="tr"></b></div>
       <div class="sum"><span>Utilidad antes de impuestos</span><b data-o="ut"></b></div>
       <div><span>Margen sobre ventas</span><b data-o="mg"></b></div>
     </div>
   </div>
-  <p class="small">Costo de construcción = obra (incluye áreas comunes; la excavación de la torre va aparte, en su casilla). Indirectos = proyecto, licencias, supervisión, gerencia y seguros, como % de la obra. Comercialización = corredores y publicidad, como % de las ventas. No incluye IGV, impuesto a la renta ni financiamiento. Terreno según la tasación comercial de 2021 (US$ 1,025,970); el tipo de cambio es un supuesto editable.</p>
+  <p class="small">Costo de construcción = obra (incluye áreas comunes; la excavación de la torre va aparte, en su casilla). Indirectos = proyecto, licencias, supervisión, gerencia y seguros, como % de la obra. Comercialización = corredores y publicidad, como % de las ventas. No incluye IGV, impuesto a la renta ni financiamiento. Terreno: valor de trabajo de US$ 600 mil, por debajo de la tasación comercial de 2021 (US$ 1,025,970), con la que el proyecto no cierra. Construcción a S/ 1,900 por m² con acabados básicos: sin sótano y con la fachada demolida (no se restaura), la obra es más simple. Las calzaduras junto a las medianeras de adobe, la excavación y los muros de la torre van aparte, en su casilla. Todo es editable.</p>
 </section>
 
 <section>
