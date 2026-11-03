@@ -195,6 +195,13 @@ svg .rail{stroke:#2f3537;stroke-width:1.6;stroke-dasharray:2 2}
 .torre ol,.torre ul{padding-left:20px;display:grid;gap:4px}
 .torre .cuenta{font:600 17px var(--mono);background:var(--surface);border-left:3px solid var(--accent);padding:10px 14px;display:inline-block}
 .torre table.niveles td,.torre table.niveles th{text-align:center}
+
+.pt-wrap{position:relative;background:var(--surface);border:1px solid var(--line)}
+.pt-wrap canvas{display:block;width:100%;touch-action:none}
+.pt-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 12px;border-top:1px solid var(--line)}
+.pt-bar button{font:600 13px var(--sans);padding:7px 12px;border:1px solid var(--line);background:var(--ground);color:var(--ink);border-radius:3px;cursor:pointer}
+.pt-bar button:hover{border-color:var(--accent)}
+.pt-bar button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
 </style>
 </head>
 <body>
@@ -281,6 +288,7 @@ svg .rail{stroke:#2f3537;stroke-width:1.6;stroke-dasharray:2 2}
   <p class="small">Colores: blanco y ocre = fachada original, que afuera se lee de 2 pisos y tiene 4 niveles detrás · beige = departamentos · lila = dúplex · gris = escalera y ascensor (y montaautos con sótano) · verde = terrazas y patio · madera = terrazas comunes. La maqueta cambia con el selector de proyecto de arriba.</p>
 </section>
 </div>
+
 
 <section>
   <span class="kicker">Unidades</span>
@@ -541,6 +549,21 @@ svg .rail{stroke:#2f3537;stroke-width:1.6;stroke-dasharray:2 2}
 </section>
 
 <div class="mq-slot"></div>
+<section>
+  <span class="kicker">Patio central</span>
+  <h2>Una plazuela española en el corazón del edificio</h2>
+  <p class="small">Arrastra para girar, rueda o pellizca para acercar. Escena esquemática a escala del patio de la torre (6.90 × 19.40 m, a −1.90) y del patio de adelante (a −0.60), unidos por una escalinata.</p>
+  <div class="pt-wrap" id="patio3d">
+    <canvas aria-label="Vista 3D del patio central: pileta, naranjos, bancas y galerías"></canvas>
+    <div class="pt-bar">
+      <button type="button" data-pv="ojo">A la altura de los ojos</button>
+      <button type="button" data-pv="gal">Desde la galería del piso 4</button>
+      <button type="button" data-pv="esc">Desde la escalinata</button>
+      <button type="button" data-pv="alto">Desde arriba</button>
+    </div>
+  </div>
+  <p class="small">Como en los patios andaluces y las corralas de Madrid: piso de barro cocido, zócalo de azulejos, una pileta de piedra al centro con su taza, cuatro parterres de grass con naranjos y borde de arrayán, bancas de madera y fierro, faroles y macetas de geranios en las barandas. Las galerías de cada piso dan al patio. Las jardineras de la escalinata llevan buganvilla, y en el patio de adelante hay un jacarandá.</p>
+</section>
 
 <section>
   <span class="kicker">Unidades</span>
@@ -950,6 +973,288 @@ svg .rail{stroke:#2f3537;stroke-width:1.6;stroke-dasharray:2 2}
 
   function resize(){ var w = cv.clientWidth, h = cv.clientHeight; if (cv.width !== Math.floor(w * renderer.getPixelRatio()) || cv.height !== Math.floor(h * renderer.getPixelRatio())) { renderer.setSize(w, h, false); cam.aspect = w / h; cam.updateProjectionMatrix(); } }
   (function loop(){ resize(); ctl.update(); renderer.render(scene, cam); requestAnimationFrame(loop); })();
+})();
+</script>
+
+<script>
+(function(){
+  var P = {"W": 19.5, "BAR": 5.1, "PX0": 6.3, "PX1": 13.200000000000001, "FRONT": 7.0, "FRONT_U": 5.8, "YT": 15.0, "YRG0": 34.44, "YRG1": 35.64, "zf": [-0.6, 2.05, 4.7, 7.35], "zt": [-1.9, 0.75, 3.4, 6.05, 8.7, 11.35]};
+  var host = document.getElementById('patio3d'); if (!host || !window.THREE) return;
+  var cv = host.querySelector('canvas');
+  var R = new THREE.WebGLRenderer({canvas: cv, antialias: true});
+  R.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  R.shadowMap.enabled = true; R.shadowMap.type = THREE.PCFSoftShadowMap;
+  R.outputEncoding = THREE.sRGBEncoding; R.toneMapping = THREE.ACESFilmicToneMapping; R.toneMappingExposure = 1.1;
+  var scene = new THREE.Scene();
+  scene.background = new THREE.Color(0xa9cbe6);
+  var cam = new THREE.PerspectiveCamera(58, 1.6, 0.1, 400);
+  var ctl = new THREE.OrbitControls(cam, cv); ctl.enableDamping = true; ctl.dampingFactor = 0.08;
+
+  scene.add(new THREE.HemisphereLight(0xf2f6ff, 0xc9a27a, 0.85));
+  var sun = new THREE.DirectionalLight(0xfff0d2, 1.9);
+  sun.position.set(17, 48, 38); sun.target.position.set(9.75, -2, 22);
+  sun.castShadow = true; sun.shadow.mapSize.set(2048, 2048); sun.shadow.bias = -0.0004;
+  var sc = sun.shadow.camera; sc.left = -22; sc.right = 22; sc.top = 26; sc.bottom = -26; sc.near = 1; sc.far = 120;
+  scene.add(sun); scene.add(sun.target);
+
+  // ---- texturas dibujadas ----
+  function tex(w, h, draw, rx, ry){
+    var c = document.createElement('canvas'); c.width = w; c.height = h; draw(c.getContext('2d'), w, h);
+    var t = new THREE.CanvasTexture(c); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(rx || 1, ry || 1);
+    t.encoding = THREE.sRGBEncoding; t.anisotropy = 8; return t;
+  }
+  var rnd = (function(){ var s = 7; return function(){ s = (s * 16807) % 2147483647; return s / 2147483647; }; })();
+  function barro(ctx, w, h){
+    ctx.fillStyle = '#e2d2b6'; ctx.fillRect(0, 0, w, h);
+    var n = 4, q = w / n;
+    for (var i = 0; i < n; i++) for (var j = 0; j < n; j++){
+      var r = 182 + rnd() * 26, g = 98 + rnd() * 22, b = 62 + rnd() * 16;
+      ctx.fillStyle = 'rgb(' + (r|0) + ',' + (g|0) + ',' + (b|0) + ')'; ctx.fillRect(i * q + 3, j * q + 3, q - 6, q - 6);
+    }
+  }
+  function azulejo(ctx, w, h){
+    var q = w / 2;
+    for (var i = 0; i < 2; i++) for (var j = 0; j < 2; j++){
+      var x = i * q, y = j * q;
+      ctx.fillStyle = '#f4efe2'; ctx.fillRect(x, y, q, q);
+      ctx.strokeStyle = '#1f4f8f'; ctx.lineWidth = 5; ctx.strokeRect(x + 3, y + 3, q - 6, q - 6);
+      ctx.fillStyle = '#1f4f8f';
+      [[0,0],[q,0],[0,q],[q,q]].forEach(function(c){ ctx.beginPath(); ctx.arc(x + c[0], y + c[1], q * 0.28, 0, 6.29); ctx.fill(); });
+      ctx.beginPath(); ctx.arc(x + q / 2, y + q / 2, q * 0.22, 0, 6.29); ctx.fill();
+      ctx.fillStyle = '#e0a53a'; ctx.beginPath(); ctx.arc(x + q / 2, y + q / 2, q * 0.09, 0, 6.29); ctx.fill();
+    }
+  }
+  function grass(ctx, w, h){
+    ctx.fillStyle = '#6f9b3f'; ctx.fillRect(0, 0, w, h);
+    for (var i = 0; i < 2500; i++){ ctx.fillStyle = rnd() > 0.5 ? 'rgba(52,96,30,.5)' : 'rgba(150,190,90,.45)'; ctx.fillRect(rnd() * w, rnd() * h, 2, 5); }
+  }
+  function std(c, o){ o = o || {}; o.color = c; if (o.roughness === undefined) o.roughness = 0.85; return new THREE.MeshStandardMaterial(o); }
+  var M = {
+    wall: std(0xf3eee3), ocre: std(0xd7a75c), stone: std(0xe4dac7), iron: std(0x262a2b, {roughness: 0.6, metalness: 0.4}),
+    wood: std(0x8a5a35), door: std(0x6e4126), glass: std(0x3c5663, {roughness: 0.15, metalness: 0.2}), frame: std(0xf7f4ee),
+    shut: std(0x2f5d46), hedge: std(0x3e6b2c), leaf: std(0x3f7a34), trunk: std(0x6b5440), orange: std(0xf08a1c, {roughness: 0.5}),
+    jac: std(0x8d6cc9), bug: std(0xc2307a), pot: std(0xb5653a), gera: std(0xd8302f), water: std(0x5ea8cf, {roughness: 0.05, metalness: 0.1, transparent: true, opacity: 0.85}),
+    fall: std(0xdff2fb, {roughness: 0.1, transparent: true, opacity: 0.35, side: THREE.DoubleSide}), lamp: std(0xffe2a0, {emissive: 0xffc560, emissiveIntensity: 0.6})
+  };
+  function mtex(t){ return std(0xffffff, {map: t}); }
+
+  function bx(x0, x1, y0, y1, z0, z1, m, cast){
+    var me = new THREE.Mesh(new THREE.BoxGeometry(Math.max(x1 - x0, .01), Math.max(y1 - y0, .01), Math.max(z1 - z0, .01)), m);
+    me.position.set((x0 + x1) / 2, (y0 + y1) / 2, (z0 + z1) / 2); me.castShadow = cast !== false; me.receiveShadow = true; scene.add(me); return me;
+  }
+  function msh(geo, m, x, y, z){ var o = new THREE.Mesh(geo, m); o.position.set(x, y, z); o.castShadow = true; o.receiveShadow = true; scene.add(o); return o; }
+
+  var W = P.W, BAR = P.BAR, X0 = P.PX0, X1 = P.PX1, FR = P.FRONT, FU = P.FRONT_U, YT = P.YT, G0 = P.YRG0, G1 = P.YRG1;
+  var ZF = P.zf, ZT = P.zt, H = 2.65;
+  var XL = BAR, XR = W - BAR;                                   // fachadas de las unidades que dan al patio
+
+  // ---- pisos ----
+  function floor(x0, x1, z0, z1, y, rep){ var t = tex(256, 256, barro, (x1 - x0) / 1.6, (z1 - z0) / 1.6); bx(x0, x1, y - 0.1, y, z0, z1, mtex(t), false); }
+  floor(XL, XR, YT, G1, -1.9);
+  floor(XL, XR, FR, YT, -0.6);
+  // muro de 1.30 m entre los dos patios, con escalinata al centro y jardineras con buganvilla
+  var sx0 = 8.5, sx1 = 11.0;
+  for (var i = 0; i < 8; i++) bx(sx0, sx1, -1.9, -0.6 - i * 0.1625, YT + i * 0.3, YT + (i + 1) * 0.3, M.stone);
+  [[X0, sx0], [sx1, X1]].forEach(function(s){
+    bx(s[0], s[1], -1.9, -0.2, YT, YT + 2.4, M.stone);
+    bx(s[0] + 0.12, s[1] - 0.12, -0.2, -0.12, YT + 0.12, YT + 2.28, mtex(tex(128, 128, grass, 2, 2)), false);
+    for (var k = 0; k < 9; k++) msh(new THREE.SphereGeometry(0.28 + rnd() * 0.18, 10, 8), rnd() > 0.35 ? M.bug : M.leaf, s[0] + 0.3 + rnd() * (s[1] - s[0] - 0.6), -0.05 + rnd() * 0.25, YT + 0.3 + rnd() * 1.9);
+  });
+  bx(X0, X1, -1.9, -1.0, YT - 0.02, YT + 0.02, mtex(tex(256, 256, azulejo, 6.9 / 0.6, 1.5)), false);
+
+  // ---- fachadas alrededor: muros encalados, zócalo de azulejos, puertas y ventanas con contraventanas ----
+  function facadeX(x, dir, z0, z1, y0, y1, units, levels){
+    bx(x - (dir > 0 ? 0.3 : 0), x + (dir > 0 ? 0 : 0.3), y0, y1, z0, z1, M.wall);
+    var zt = tex(256, 256, azulejo, (z1 - z0) / 0.6, 1.8);
+    var zm = mtex(zt);
+    var fx = x + dir * 0.02;
+    levels.forEach(function(L){
+      if (L === levels[0]) bx(Math.min(x, fx), Math.max(x, fx), L, L + 1.05, z0, z1, zm, false);
+      units.forEach(function(u){
+        var d0 = u[0] + 0.5, w0 = u[0] + 1.6, w1 = Math.min(u[1] - 0.5, w0 + 1.3);
+        if (u[2]) return;
+        var a = x + dir * 0.0, b = x + dir * 0.06;
+        bx(Math.min(a, b), Math.max(a, b), L, L + 2.1, d0, d0 + 0.9, M.door);
+        if (w1 - w0 > 0.6){
+          bx(Math.min(a, b), Math.max(a, b), L + 0.9, L + 2.15, w0, w1, M.frame);
+          var c = x + dir * 0.08;
+          bx(Math.min(a, c), Math.max(a, c), L + 0.98, L + 2.07, w0 + 0.08, w1 - 0.08, M.glass);
+          bx(Math.min(a, c), Math.max(a, c), L + 0.9, L + 2.15, w0 - 0.45, w0 - 0.05, M.shut);
+          bx(Math.min(a, c), Math.max(a, c), L + 0.9, L + 2.15, w1 + 0.05, w1 + 0.45, M.shut);
+        }
+      });
+    });
+    bx(Math.min(x, x + dir * 0.35), Math.max(x, x + dir * 0.35), y1 - 0.35, y1, z0, z1, M.ocre);
+  }
+  facadeX(XL, 1, FR, YT, -0.6, 10.0, [[FR, FR + 3.9], [FR + 3.9, YT]], ZF);
+  facadeX(XL, 1, YT, G0, -1.9, 14.0, [[YT, YT + 6, 1], [YT + 6, YT + 13.6], [YT + 13.6, G0]], ZT);
+  facadeX(XR, -1, FR, YT, -0.6, 10.0, [[FR, FR + 3.75], [FR + 3.75, YT]], ZF);
+  facadeX(XR, -1, YT, G0, -1.9, 14.0, [[YT, YT + 7], [YT + 7, YT + 13.22], [YT + 13.22, G0]], ZT);
+  // fondo (z = G1) y frente (pasillo del frente a z = FU)
+  function facadeZ(z, dir, x0, x1, y0, y1, units, levels, zoc){
+    bx(x0, x1, y0, y1, Math.min(z, z + dir * 0.3), Math.max(z, z + dir * 0.3), M.wall);
+    if (zoc) bx(x0, x1, levels[0], levels[0] + 1.05, Math.min(z, z - dir * 0.02), Math.max(z, z - dir * 0.02), mtex(tex(256, 256, azulejo, (x1 - x0) / 0.6, 1.8)), false);
+    levels.forEach(function(L){
+      units.forEach(function(u){
+        var a = z, b = z - dir * 0.06, c = z - dir * 0.08;
+        bx(u[0] + 0.5, u[0] + 1.4, L, L + 2.1, Math.min(a, b), Math.max(a, b), M.door);
+        var w0 = u[0] + 1.9, w1 = Math.min(u[1] - 0.6, w0 + 1.4);
+        if (w1 - w0 > 0.6){
+          bx(w0, w1, L + 0.9, L + 2.15, Math.min(a, b), Math.max(a, b), M.frame);
+          bx(w0 + 0.08, w1 - 0.08, L + 0.98, L + 2.07, Math.min(a, c), Math.max(a, c), M.glass);
+          bx(w0 - 0.45, w0 - 0.05, L + 0.9, L + 2.15, Math.min(a, c), Math.max(a, c), M.shut);
+          bx(w1 + 0.05, w1 + 0.45, L + 0.9, L + 2.15, Math.min(a, c), Math.max(a, c), M.shut);
+        }
+      });
+    });
+    bx(x0, x1, y1 - 0.35, y1, Math.min(z, z - dir * 0.35), Math.max(z, z - dir * 0.35), M.ocre);
+  }
+  facadeZ(G1, 1, 0, W, -1.9, 14.0, [[0, 6], [6, 9.75], [9.75, 13.5], [13.5, W]], ZT, true);
+  facadeZ(FU, -1, 0, W, 2.05, 10.0, [[0, 6.5], [6.5, 13], [13, W]], ZF.slice(1), false);
+  bx(0, W, -0.6, 2.05, FR - 0.3, FR, M.wall);
+  bx(XL, XR, -0.6, 0.45, FR, FR + 0.02, mtex(tex(256, 256, azulejo, (XR - XL) / 0.6, 1.8)), false);
+  bx(7.6, 8.5, -0.6, 1.5, FR, FR + 0.06, M.door);
+
+  // ---- galerías tipo corrala: losas con canto ocre, pies derechos, barandas de fierro y geranios ----
+  var balG = new THREE.BoxGeometry(0.025, 0.9, 0.025), bal = [], potG = new THREE.CylinderGeometry(0.11, 0.08, 0.18, 10), pots = [], flG = new THREE.SphereGeometry(0.14, 8, 6), fls = [];
+  function gallery(ax, z0, z1, L, side, roof){
+    // galería paralela a z, borde hacia el patio en x = ax
+    var xa = side > 0 ? ax - 1.2 : ax, xb = side > 0 ? ax : ax + 1.2;
+    bx(xa, xb, L - 0.2, L, z0, z1, M.wall);
+    bx(side > 0 ? ax - 0.06 : ax, side > 0 ? ax : ax + 0.06, L - 0.28, L + 0.02, z0, z1, M.ocre);
+    if (roof) return;
+    for (var z = z0 + 0.06; z < z1; z += 0.13) bal.push([ax, L + 0.5, z]);
+    bx(ax - 0.03, ax + 0.03, L + 0.95, L + 1.0, z0, z1, M.iron); bx(ax - 0.02, ax + 0.02, L + 0.06, L + 0.1, z0, z1, M.iron);
+    for (var z2 = z0 + 0.8; z2 < z1 - 0.3; z2 += 1.6){ var px = ax + side * 0.14; pots.push([px, L + 1.04, z2]); fls.push([px, L + 1.2, z2]); }
+  }
+  function galleryZ(az, x0, x1, L, side){
+    var za = side > 0 ? az - 1.2 : az, zb = side > 0 ? az : az + 1.2;
+    bx(x0, x1, L - 0.2, L, za, zb, M.wall);
+    bx(x0, x1, L - 0.28, L + 0.02, side > 0 ? az - 0.06 : az, side > 0 ? az : az + 0.06, M.ocre);
+    for (var x = x0 + 0.06; x < x1; x += 0.13) bal.push([x, L + 0.5, az, 1]);
+    bx(x0, x1, L + 0.95, L + 1.0, az - 0.03, az + 0.03, M.iron); bx(x0, x1, L + 0.06, L + 0.1, az - 0.02, az + 0.02, M.iron);
+    for (var x2 = x0 + 0.8; x2 < x1 - 0.3; x2 += 1.6){ var pz = az + side * 0.14; pots.push([x2, L + 1.04, pz]); fls.push([x2, L + 1.2, pz]); }
+  }
+  ZF.slice(1).concat([10.0]).forEach(function(L, i){
+    var roof = L === 10.0;
+    gallery(X0, FR, YT, L, 1, roof); gallery(X1, FR, YT - 0.5, L, -1, roof);
+    if (!roof) galleryZ(FR, X0, X1, L, 1);
+  });
+  ZT.slice(1).concat([14.0]).forEach(function(L){
+    var roof = L === 14.0;
+    gallery(X0, YT, G0, L, 1, roof); gallery(X1, YT, G0, L, -1, roof);
+    if (!roof) galleryZ(G0, X0, X1, L, -1); else bx(X0, X1, L - 0.2, L, G0, G1, M.wall);
+  });
+  // pies derechos de madera en el borde de las galerías
+  function posts(ax, z0, z1, levels, top){
+    for (var z = z0 + 0.15; z <= z1 - 0.1; z += 3.25)
+      levels.forEach(function(L, i){ var nx = i + 1 < levels.length ? levels[i + 1] - 0.2 : top - 0.2; bx(ax - 0.07, ax + 0.07, L, nx, z - 0.07, z + 0.07, M.wood); });
+  }
+  posts(X0 - 0.1, FR, YT, ZF, 10.0); posts(X1 + 0.1, FR, YT - 0.5, ZF, 10.0);
+  posts(X0 - 0.1, YT, G0, ZT, 14.0); posts(X1 + 0.1, YT, G0, ZT, 14.0);
+  function inst(geo, m, list, rotY){
+    var im = new THREE.InstancedMesh(geo, m, list.length), o = new THREE.Object3D();
+    list.forEach(function(p, i){ o.position.set(p[0], p[1], p[2]); o.rotation.set(0, 0, 0); o.updateMatrix(); im.setMatrixAt(i, o.matrix); });
+    im.castShadow = true; im.receiveShadow = true; scene.add(im); return im;
+  }
+  inst(balG, M.iron, bal); inst(potG, M.pot, pots); inst(flG, M.gera, fls);
+
+  // ---- plazuela: pileta, parterres con naranjos, bancas, faroles ----
+  var cx = (X0 + X1) / 2, cz = 26.0, F = -1.9;
+  var oct = function(r, h, m, y, open){ var me = msh(new THREE.CylinderGeometry(r, r, h, 8, 1, !!open), m, cx, y, cz); me.rotation.y = Math.PI / 8; return me; };
+  oct(1.75, 0.55, M.stone, F + 0.275);
+  var band = oct(1.77, 0.32, mtex(tex(256, 256, azulejo, 8, 1)), F + 0.3, true);
+  oct(1.86, 0.12, M.stone, F + 0.61);
+  msh(new THREE.CylinderGeometry(1.62, 1.62, 0.02, 32), M.water, cx, F + 0.5, cz);
+  msh(new THREE.CylinderGeometry(0.2, 0.3, 1.3, 16), M.stone, cx, F + 1.15, cz);
+  var bowl = msh(new THREE.SphereGeometry(0.78, 28, 12, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2), M.stone, cx, F + 1.85, cz);
+  msh(new THREE.CylinderGeometry(0.72, 0.72, 0.02, 28), M.water, cx, F + 1.83, cz);
+  msh(new THREE.CylinderGeometry(0.1, 0.14, 0.55, 12), M.stone, cx, F + 2.1, cz);
+  msh(new THREE.SphereGeometry(0.16, 14, 10), M.stone, cx, F + 2.42, cz);
+  var fall = msh(new THREE.CylinderGeometry(0.8, 1.05, 1.32, 32, 1, true), M.fall, cx, F + 1.18, cz); fall.castShadow = false;
+  var jet = msh(new THREE.CylinderGeometry(0.025, 0.04, 0.5, 8), M.fall, cx, F + 2.75, cz); jet.castShadow = false;
+  var gm = mtex(tex(128, 128, grass, 3, 5));
+  [[X0 + 0.6, cx - 0.85], [cx + 0.85, X1 - 0.6]].forEach(function(xs){
+    [[YT + 3.6, cz - 2.6], [cz + 2.6, G0 - 0.9]].forEach(function(zs){
+      bx(xs[0], xs[1], F, F + 0.06, zs[0], zs[1], gm, false);
+      bx(xs[0] - 0.12, xs[1] + 0.12, F, F + 0.32, zs[0] - 0.12, zs[0], M.hedge); bx(xs[0] - 0.12, xs[1] + 0.12, F, F + 0.32, zs[1], zs[1] + 0.12, M.hedge);
+      bx(xs[0] - 0.12, xs[0], F, F + 0.32, zs[0], zs[1], M.hedge); bx(xs[1], xs[1] + 0.12, F, F + 0.32, zs[0], zs[1], M.hedge);
+      var tx = (xs[0] + xs[1]) / 2, tz = (zs[0] + zs[1]) / 2;
+      msh(new THREE.CylinderGeometry(0.09, 0.13, 1.7, 8), M.trunk, tx, F + 0.85, tz);
+      var cr = msh(new THREE.SphereGeometry(1.05, 18, 14), M.leaf, tx, F + 2.45, tz); cr.scale.set(1, 0.9, 1);
+      for (var k = 0; k < 22; k++){ var a = rnd() * 6.28, e = rnd() * 1.2 - 0.3; msh(new THREE.SphereGeometry(0.07, 8, 6), M.orange, tx + Math.cos(a) * Math.cos(e) * 1.0, F + 2.45 + Math.sin(e) * 0.9, tz + Math.sin(a) * Math.cos(e) * 1.0); }
+    });
+  });
+  function bench(x, z, rot){
+    var g = new THREE.Group();
+    function b(x0, x1, y0, y1, z0, z1, m){ var me = new THREE.Mesh(new THREE.BoxGeometry(x1 - x0, y1 - y0, z1 - z0), m); me.position.set((x0 + x1) / 2, (y0 + y1) / 2, (z0 + z1) / 2); me.castShadow = true; g.add(me); }
+    for (var s = 0; s < 4; s++) b(-0.9, 0.9, 0.43, 0.47, -0.22 + s * 0.11, -0.14 + s * 0.11, M.wood);
+    for (var s2 = 0; s2 < 3; s2++) b(-0.9, 0.9, 0.58 + s2 * 0.12, 0.66 + s2 * 0.12, 0.24, 0.28, M.wood);
+    [-0.8, 0.8].forEach(function(x0){ b(x0 - 0.03, x0 + 0.03, 0, 0.45, -0.22, 0.22, M.iron); b(x0 - 0.03, x0 + 0.03, 0.45, 0.95, 0.24, 0.3, M.iron); b(x0 - 0.03, x0 + 0.03, 0.6, 0.64, -0.2, 0.26, M.iron); });
+    g.position.set(x, F, z); g.rotation.y = rot; scene.add(g);
+  }
+  bench(X0 + 0.55, cz, -Math.PI / 2); bench(X1 - 0.55, cz, Math.PI / 2);
+  function farol(x, z){
+    msh(new THREE.CylinderGeometry(0.05, 0.08, 3.0, 10), M.iron, x, F + 1.5, z);
+    bx(x - 0.17, x + 0.17, F + 3.0, F + 3.45, z - 0.17, z + 0.17, M.lamp);
+    var cap = msh(new THREE.ConeGeometry(0.28, 0.25, 4), M.iron, x, F + 3.57, z); cap.rotation.y = Math.PI / 4;
+  }
+  farol(cx - 1.6, cz - 2.2); farol(cx + 1.6, cz + 2.2); farol(cx + 1.6, cz - 2.2); farol(cx - 1.6, cz + 2.2);
+  // buganvilla en el muro de la escalera y jacarandá en el patio de adelante
+  var jz = (FR + YT) / 2;
+  bx(cx - 1.4, cx + 1.4, -0.6, -0.54, jz - 2.2, jz + 2.2, gm, false);
+  msh(new THREE.CylinderGeometry(0.12, 0.18, 3.0, 8), M.trunk, cx, 0.9, jz);
+  [[0, 3.1, 0, 1.7], [-0.8, 2.8, 0.6, 1.1], [0.9, 2.9, -0.5, 1.1], [0.2, 3.6, 0.3, 1.2]].forEach(function(c){ var s = msh(new THREE.SphereGeometry(c[3], 16, 12), M.jac, cx + c[0], c[1], jz + c[2]); s.scale.set(1.1, 0.7, 1.1); });
+  bench(XL + 1.75, jz, -Math.PI / 2); bench(XR - 1.75, jz, Math.PI / 2);
+
+  // ---- personas ----
+  var Mp = [std(0x2f4f6f), std(0x9b3b2e), std(0x50663a), std(0xc58b3b), std(0x5d4a6e), std(0x3e3e3e)], skin = std(0xd6ad86);
+  function person(x, z, k, sit, h){
+    h = h || 1;
+    var y0 = (z < YT ? -0.6 : F);
+    if (sit){
+      msh(new THREE.CylinderGeometry(0.17, 0.19, 0.6, 10), Mp[k % 6], x, y0 + 0.78, z);
+      msh(new THREE.BoxGeometry(0.34, 0.14, 0.45), Mp[(k + 2) % 6], x, y0 + 0.5, z);
+      msh(new THREE.SphereGeometry(0.12, 12, 10), skin, x, y0 + 1.2, z);
+    } else {
+      msh(new THREE.CylinderGeometry(0.16 * h, 0.19 * h, 0.75 * h, 10), Mp[k % 6], x, y0 + 0.95 * h, z);
+      msh(new THREE.CylinderGeometry(0.15 * h, 0.12 * h, 0.6 * h, 10), Mp[(k + 3) % 6], x, y0 + 0.3 * h, z);
+      msh(new THREE.SphereGeometry(0.12 * h, 12, 10), skin, x, y0 + 1.48 * h, z);
+    }
+  }
+  person(X0 + 0.65, cz - 0.4, 0, true); person(X0 + 0.65, cz + 0.45, 1, true);
+  person(X1 - 0.65, cz + 0.2, 2, true);
+  person(cx + 1.0, cz - 2.0, 3, false, 0.7); person(cx - 0.6, cz + 2.05, 4, false, 0.65);
+  person(cx + 0.6, YT + 4.0, 5); person(cx - 0.4, G0 - 2.0, 1);
+  person(XL + 1.9, jz + 0.3, 2, true); person(cx + 1.6, jz - 1.8, 0);
+
+  // ---- cámaras ----
+  var V = {
+    ojo: [[cx + 0.4, F + 1.65, G0 - 0.4], [cx - 0.3, F + 3.2, YT + 1.0]],
+    gal: [[X1 + 0.6, ZT[3] + 1.6, G0 - 1.0], [cx - 1.2, F + 0.6, YT + 4.0]],
+    esc: [[cx + 1.9, -0.6 + 1.65, FR + 1.4], [cx, F + 1.2, cz]],
+    alto: [[cx + 6, 26, G1 + 9], [cx, F, cz - 2]]
+  };
+  function view(k){ var v = V[k]; cam.position.set(v[0][0], v[0][1], v[0][2]); ctl.target.set(v[1][0], v[1][1], v[1][2]); ctl.update(); }
+  host.querySelectorAll('[data-pv]').forEach(function(b){ b.addEventListener('click', function(){ view(b.dataset.pv); }); });
+  view('ojo');
+
+  var lw = 0;
+  function size(){
+    var w = host.clientWidth; if (!w || w === lw) return; lw = w;
+    var h = Math.round(Math.min(w * 0.62, window.innerHeight * 0.8));
+    R.setSize(w, h, false); cv.style.height = h + 'px'; cam.aspect = w / h; cam.updateProjectionMatrix();
+  }
+  var t0 = performance.now();
+  function tick(){
+    requestAnimationFrame(tick);
+    if (!host.offsetParent) return;
+    size(); ctl.update();
+    var t = (performance.now() - t0) / 1000;
+    jet.scale.y = 1 + 0.15 * Math.sin(t * 6); fall.material.opacity = 0.3 + 0.06 * Math.sin(t * 4);
+    R.render(scene, cam);
+  }
+  tick();
 })();
 </script>
 
