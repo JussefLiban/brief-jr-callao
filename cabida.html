@@ -317,7 +317,7 @@ svg .rail{stroke:#2f3537;stroke-width:1.6;stroke-dasharray:2 2}
 <div class="mq-slot"><section id="maqueta">
   <span class="kicker">Maqueta 3D</span>
   <h2>El edificio en volumen</h2>
-  <p class="small">Arrastra para girar, rueda o pellizca para acercar, clic derecho o dos dedos para desplazar. Volúmenes esquemáticos a escala; no es un render.</p>
+  <p class="small">Clic izquierdo para girar, rueda para acercar, botón de la rueda (o clic derecho) para desplazar, como en AutoCAD. Volúmenes esquemáticos a escala; no es un render.</p>
   <div class="mq-wrap">
     <canvas id="mq" aria-label="Maqueta 3D del edificio"></canvas>
     <div class="mq-msg" id="mq-msg">Cargando maqueta…</div>
@@ -326,6 +326,7 @@ svg .rail{stroke:#2f3537;stroke-width:1.6;stroke-dasharray:2 2}
       <button type="button" data-v="aerea">Vista aérea</button>
       <button type="button" data-v="fondo">Desde el fondo</button>
       <button type="button" data-v="vacio">Mirar el vacío</button>
+      <label for="mq-hand"><input type="checkbox" id="mq-hand"> Mano (desplazar con clic izquierdo)</label>
       <label for="mq-front"><input type="checkbox" id="mq-front"> Quitar fachada y bloque frontal</label>
       <label for="mq-ctx"><input type="checkbox" id="mq-ctx" checked> Vecinos y calle</label>
     </div>
@@ -336,7 +337,7 @@ svg .rail{stroke:#2f3537;stroke-width:1.6;stroke-dasharray:2 2}
 <section>
   <span class="kicker">Patio central</span>
   <h2>Una plazuela española en el corazón del edificio</h2>
-  <p class="small">Arrastra para girar, rueda o pellizca para acercar. Escena esquemática a escala del patio de la torre (6.90 × 19.40 m, a −1.90) y del patio de adelante (a −0.60), unidos por una escalinata.</p>
+  <p class="small">Clic izquierdo para girar, rueda para acercar, botón de la rueda (o clic derecho) para desplazar, como en AutoCAD. Escena esquemática a escala del patio de la torre (6.90 × 19.40 m, a −1.90) y del patio de adelante (a −0.60), unidos por una escalinata.</p>
   <div class="pt-wrap" id="patio3d">
     <canvas aria-label="Vista 3D del patio central: pileta, naranjos, bancas y galerías"></canvas>
     <div class="pt-bar">
@@ -344,6 +345,7 @@ svg .rail{stroke:#2f3537;stroke-width:1.6;stroke-dasharray:2 2}
       <button type="button" data-pv="gal">Desde la galería del piso 4</button>
       <button type="button" data-pv="esc">Desde la escalinata</button>
       <button type="button" data-pv="alto">Desde arriba</button>
+      <label style="font-size:13px;color:var(--muted);display:inline-flex;gap:6px;align-items:center;margin-left:6px"><input type="checkbox" class="pt-hand"> Mano (desplazar con clic izquierdo)</label>
     </div>
   </div>
   <p class="small">Como en los patios andaluces y las corralas de Madrid: piso de barro cocido, zócalo de azulejos, una pileta de piedra al centro con su taza, cuatro parterres de grass con naranjos y borde de arrayán, bancas de madera y fierro, faroles y macetas de geranios en las barandas. Las galerías de cada piso dan al patio. Las jardineras de la escalinata llevan buganvilla, y en el patio de adelante hay un jacarandá.</p>
@@ -509,6 +511,13 @@ svg .rail{stroke:#2f3537;stroke-width:1.6;stroke-dasharray:2 2}
   scene.background = new THREE.Color(0xdfe7ea);
   var cam = new THREE.PerspectiveCamera(40, 1, 0.5, 600);
   var ctl = new THREE.OrbitControls(cam, cv);
+
+  // como AutoCAD: rueda = zoom, botón de la rueda = desplazar (mano), clic izquierdo = girar
+  ctl.mouseButtons = {LEFT: THREE.MOUSE.ROTATE, MIDDLE: THREE.MOUSE.PAN, RIGHT: THREE.MOUSE.PAN};
+  ctl.screenSpacePanning = true;
+  cv.addEventListener('mousedown', function(e){ if (e.button === 1) e.preventDefault(); });
+  cv.addEventListener('auxclick', function(e){ if (e.button === 1) e.preventDefault(); });
+  function setHand(on){ ctl.mouseButtons.LEFT = on ? THREE.MOUSE.PAN : THREE.MOUSE.ROTATE; cv.style.cursor = on ? 'grab' : ''; }
   ctl.enableDamping = true; ctl.target.set(W / 2, 3, D / 2);
 
   scene.add(new THREE.HemisphereLight(0xffffff, 0x8a8f86, 0.75));
@@ -740,6 +749,7 @@ svg .rail{stroke:#2f3537;stroke-width:1.6;stroke-dasharray:2 2}
   };
   function view(k){ var v = V[k]; cam.position.set(v[0][0], v[0][1], v[0][2]); ctl.target.set(v[1][0], v[1][1], v[1][2]); ctl.update(); }
   document.querySelectorAll('.mq-bar button').forEach(function(b){ b.addEventListener('click', function(){ view(b.dataset.v); }); });
+  document.getElementById('mq-hand').addEventListener('change', function(e){ setHand(e.target.checked); });
   document.getElementById('mq-front').addEventListener('change', function(e){ groups.front.visible = !e.target.checked; });
   document.getElementById('mq-ctx').addEventListener('change', function(e){ groups.ctx.visible = e.target.checked; });
   window.mqVer = function(v){ var c = v !== 'sin'; groups.sot.visible = c; groups.nos.visible = !c; F1.visible = c; F2.visible = !c; };
@@ -764,6 +774,13 @@ svg .rail{stroke:#2f3537;stroke-width:1.6;stroke-dasharray:2 2}
   scene.background = new THREE.Color(0xa9cbe6);
   var cam = new THREE.PerspectiveCamera(58, 1.6, 0.1, 400);
   var ctl = new THREE.OrbitControls(cam, cv); ctl.enableDamping = true; ctl.dampingFactor = 0.08;
+
+  // como AutoCAD: rueda = zoom, botón de la rueda = desplazar (mano), clic izquierdo = girar
+  ctl.mouseButtons = {LEFT: THREE.MOUSE.ROTATE, MIDDLE: THREE.MOUSE.PAN, RIGHT: THREE.MOUSE.PAN};
+  ctl.screenSpacePanning = true;
+  cv.addEventListener('mousedown', function(e){ if (e.button === 1) e.preventDefault(); });
+  cv.addEventListener('auxclick', function(e){ if (e.button === 1) e.preventDefault(); });
+  function setHand(on){ ctl.mouseButtons.LEFT = on ? THREE.MOUSE.PAN : THREE.MOUSE.ROTATE; cv.style.cursor = on ? 'grab' : ''; }
 
   scene.add(new THREE.HemisphereLight(0xf2f6ff, 0xc9a27a, 0.85));
   var sun = new THREE.DirectionalLight(0xfff0d2, 1.9);
@@ -1013,6 +1030,7 @@ svg .rail{stroke:#2f3537;stroke-width:1.6;stroke-dasharray:2 2}
   function view(k){ var v = V[k]; cam.position.set(v[0][0], v[0][1], v[0][2]); ctl.target.set(v[1][0], v[1][1], v[1][2]); ctl.update(); }
   host.querySelectorAll('[data-pv]').forEach(function(b){ b.addEventListener('click', function(){ view(b.dataset.pv); }); });
   view('ojo');
+  host.querySelector('.pt-hand').addEventListener('change', function(e){ setHand(e.target.checked); });
 
   var lw = 0;
   function size(){
