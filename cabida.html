@@ -227,7 +227,7 @@ td.pr,td.prs{font-family:var(--mono);text-align:right;white-space:nowrap}
       <label for="mq-ctx"><input type="checkbox" id="mq-ctx" checked> Vecinos y calle</label>
     </div>
   </div>
-  <p class="small">Colores: blanco y ocre = fachada restituida · beige = departamentos · lila = dúplex en la azotea · gris = escalera, ascensor y montaautos · verde = terrazas del patio hundido · madera = terrazas comunes.</p>
+  <p class="small">Colores: blanco y ocre = fachada nueva que reinterpreta la original · beige = departamentos · lila = dúplex en la azotea · gris = escalera, ascensor y montaautos · verde = terrazas del patio hundido · madera = terrazas comunes.</p>
 </section>
 
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
@@ -334,7 +334,7 @@ td.pr,td.prs{font-family:var(--mono);text-align:right;white-space:nowrap}
   // barandas de azotea
   box(0, P.PX0, 10, 11.1, P.FRONT + 6 - 0.04, P.FRONT + 6, M.rail);
 
-  // ---- bloque frontal y fachada restituida (grupo que se puede ocultar) ----
+  // ---- bloque frontal y fachada nueva (grupo que se puede ocultar) ----
   var F = groups.front;
   L.forEach(function(y, i){
     if (i === 0) {
@@ -349,23 +349,31 @@ td.pr,td.prs{font-family:var(--mono);text-align:right;white-space:nowrap}
   box(0, W, 9.8, 10, 0.4, P.FRONT, M.slab, F);
   box(7.5, 11, 0, 9.8, 0.4, P.FRONT, M.core, F).visible = false;
   // fachada: planta baja (blanca) con vanos y planta alta (ocre) con ventanas
-  function facade(y0, y1, holes, m){
+  function facade(y0, y1, holes, m, xa, xb){
+    xa = xa || 0; xb = (xb === undefined) ? W : xb;
     var sh = new THREE.Shape();
-    sh.moveTo(0, y0); sh.lineTo(W, y0); sh.lineTo(W, y1); sh.lineTo(0, y1); sh.lineTo(0, y0);
+    sh.moveTo(xa, y0); sh.lineTo(xb, y0); sh.lineTo(xb, y1); sh.lineTo(xa, y1); sh.lineTo(xa, y0);
     holes.forEach(function(h){ var p = new THREE.Path(); p.moveTo(h[0], h[2]); p.lineTo(h[1], h[2]); p.lineTo(h[1], h[3]); p.lineTo(h[0], h[3]); p.lineTo(h[0], h[2]); sh.holes.push(p); });
     var geo = new THREE.ExtrudeGeometry(sh, {depth: 0.4, bevelEnabled: false});
     var me = new THREE.Mesh(geo, m); me.position.z = 0; me.castShadow = true; me.receiveShadow = true; F.add(me);
   }
-  var low = [[0.5, 2.9, 0.1, 2.7], [3.9, 7.1, 0.1, 2.8], [7.7, 10.8, 0.1, 3.0], [11.5, 19.0, 0.1, 2.8]];
-  facade(0, 4.4, low, M.facLow);
-  var up = []; for (var i = 0; i < 8; i++) { var x = 1.0 + i * 2.35; up.push([x, x + 1.0, 5.3, 7.3]); }
-  facade(4.4, 9.4, up, M.facUp);
-  box(-0.1, W + 0.1, 4.25, 4.55, -0.25, 0.4, M.corn, F);
-  box(-0.1, W + 0.1, 9.3, 9.8, -0.3, 0.4, M.corn, F);
-  box(7.2, 12.3, 9.8, 10.6, 0, 0.4, M.corn, F);                            // remate central
-  [[1.9, 4.2], [8.9, 11.0], [15.8, 18.0]].forEach(function(b){ box(b[0], b[1], 4.6, 4.85, -0.9, 0.4, M.corn, F); box(b[0], b[1], 4.85, 5.75, -0.9, -0.85, M.rail, F); });
-  low.forEach(function(h, i){ box(h[0], h[1], h[2], h[3], 0.15, 0.2, i === 2 ? M.shop : M.glass, F); });
-  up.forEach(function(h){ box(h[0], h[1], h[2], h[3], 0.2, 0.25, M.glass, F); });
+  // fachada nueva de 4 niveles: base blanca (tiendas a medio nivel) y cuerpo ocre con un vano por ambiente
+  var low = [[0.5, 3.0, -0.5, 1.6], [3.9, 7.1, -0.5, 1.6], [11.5, 19.0, -0.5, 1.6]];
+  facade(-0.6, 2.05, low.slice(0, 2), M.facLow, 0, 7.7);
+  facade(-0.6, 2.05, low.slice(2), M.facLow, 10.8, W);
+  var up = [], lv = [2.05, 4.70, 7.35];
+  lv.forEach(function(y){ for (var u = 0; u < 3; u++) { var x0 = u * 6.5; up.push([x0 + 0.4, x0 + 2.5, y + 0.15, y + 2.3]); up.push([x0 + 3.3, x0 + 6.1, y + 0.15, y + 2.3]); } });
+  up = up.filter(function(h){ return !(h[0] < 10.8 && h[1] > 7.7 && h[2] < 4.3); });   // portón del montaautos
+  facade(2.05, 11.1, up.concat([[7.7, 10.8, 2.1, 3.9]]), M.facUp);
+  box(-0.1, 7.7, 1.95, 2.25, -0.25, 0.4, M.corn, F);                                     // cornisa sobre la base
+  box(10.8, W + 0.1, 1.95, 2.25, -0.25, 0.4, M.corn, F);
+  box(7.7, 10.8, 0.0, 3.9, 0.15, 0.25, M.shop, F);                                       // portón del montaautos
+  box(-0.1, W + 0.1, 9.85, 10.25, -0.35, 0.4, M.corn, F);                                // cornisa principal a +10
+  box(-0.1, W + 0.1, 10.95, 11.15, -0.2, 0.4, M.corn, F);                                // remate del parapeto
+  [6.5, 13.0].forEach(function(x){ box(x - 0.25, x + 0.25, 2.25, 9.85, -0.12, 0.4, M.corn, F); }); // pilastras
+  low.forEach(function(h){ box(h[0], h[1], Math.max(h[2], 0), h[3], 0.15, 0.2, M.glass, F); });
+  [[0.5, 3.0], [3.9, 7.1], [11.5, 19.0]].forEach(function(r){ box(r[0], r[1], -0.6, 0.0, -0.9, 0.4, M.walk, F); });   // escalones al medio nivel
+  up.forEach(function(h){ box(h[0], h[1], h[2], h[3], 0.2, 0.25, M.glass, F); box(h[0], h[1], h[2] + 0.95, h[2] + 1.0, -0.04, 0.0, M.rail, F); });  // baranda al ras
 
   // ---- vistas ----
   var V = {
@@ -516,7 +524,8 @@ td.pr,td.prs{font-family:var(--mono);text-align:right;white-space:nowrap}
     <li>El argumento ante PROLIMA: al estar al fondo, a +12.65, los dúplex no se ven desde la vereda del frente ni desde la plaza. Es lo que pide el reglamento del Centro Histórico para volúmenes posteriores. Aun así, PROLIMA y Cultura deben aceptarlo.</li>
     <li>Lavandería de autoservicio con monedas y lavasecas: en ~38 m² entran unos 8 a 10 equipos. Necesita extracción de aire caliente.</li>
     <li>Departamentos del sótano: luz y ventilación natural por el patio hundido (A.020, art. 11).</li>
-    <li>Balcones: el reglamento del Centro Histórico no permite volados nuevos en ambientes urbano monumentales (Ord. 2195, art. 76 b). Los balcones volados de la fachada existente se conservan al restituirla y quedan en los departamentos del nivel 3. En el resto del frente: balcones franceses, con baranda al ras de la fachada.</li>
+    <li>Fachada: se propone una <b>fachada nueva de 4 niveles</b> que reinterpreta la original (base clara, cuerpo ocre, cornisas y pilastras), con un vano de piso a techo por ambiente y baranda al ras, sin volados (Ord. 2195, art. 76 b). Reemplaza a la fachada existente: hay que negociarlo con PROLIMA, que en 2025 pidió consolidarla.</li>
+    <li>Tiendas y recepción a medio nivel: la puerta queda a −0.60 y se baja desde la vereda por 3 o 4 escalones dentro de un pequeño retiro; la recepción suma una plataforma salvaescaleras para la accesibilidad.</li>
     <li>Cuarto de basura en el sótano, junto al de bombas (14 m²): los residuos suben a la calle por el montaautos o el ascensor en el horario de recojo. Debe tener ventilación y un punto de lavado.</li>
     <li>Dúplex del nivel 1 con piso bajo en el sótano: el piso de abajo es estar o estudio, con luz artificial y ventilación mecánica, como permite la A.020 (art. 11.3) para ambientes en sótanos. El dormitorio va arriba, con ventana al patio central. No usa espacio de estacionamientos.</li>
     <li>Vacío central: sin piso a −0.60, el pasillo de maniobras queda a cielo abierto. El estacionamiento tiene luz y ventilación natural (no necesita extracción mecánica) y el área libre se mantiene en 30%. Las galerías del nivel 1 quedan como balcones sobre el vacío.</li>
