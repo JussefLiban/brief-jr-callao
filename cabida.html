@@ -705,6 +705,11 @@ svg .rail{stroke:#2f3537;stroke-width:1.6;stroke-dasharray:2 2}
     var me = new THREE.Mesh(new THREE.ExtrudeGeometry(sh, {depth: 0.4, bevelEnabled: false}), m);
     me.castShadow = true; me.receiveShadow = true; (fg || F).add(me);
   }
+  // carpintería verde como marco (4 piezas), así el vidrio se ve claro como en el alzado
+  function marco(x0, x1, y0, y1, d0, d1, g){
+    box(x0, x1, y1 - 0.1, y1, d0, d1, M.carp, g); box(x0, x1, y0, y0 + 0.08, d0, d1, M.carp, g);
+    box(x0, x0 + 0.1, y0, y1, d0, d1, M.carp, g); box(x1 - 0.1, x1, y0, y1, d0, d1, M.carp, g);
+  }
   var FC = P.fac, F1 = new THREE.Group(), F2 = new THREE.Group(); F.add(F1); F.add(F2);
   function build(g, sot){
     fg = g;
@@ -720,12 +725,12 @@ svg .rail{stroke:#2f3537;stroke-width:1.6;stroke-dasharray:2 2}
     lowH.forEach(function(h){
       if (sot && h[2] === 0 && h[3] === FC.gateTop) { box(h[0], h[1], h[2], h[3], 0.15, 0.25, M.shop, g); return; }   // portón del montaautos
       box(h[0] + 0.1, h[1] - 0.1, Math.max(h[2], 0) + 0.08, h[3] - 0.1, 0.15, 0.2, M.glass, g);
-      box(h[0], h[1], Math.max(h[2], 0), h[3], 0.2, 0.26, M.carp, g);                // carpintería verde
+      marco(h[0], h[1], Math.max(h[2], 0), h[3], 0.12, 0.2, g);                       // carpintería verde
       if (h[2] === FC.lowB[0]) box(h[0], h[1], FC.lowB[0] + 0.55, FC.lowB[0] + 0.6, -0.04, 0.0, M.rail, g);
     });
     upH.forEach(function(h){
       box(h[0] + 0.1, h[1] - 0.1, h[2] + 0.08, h[3] - 0.1, 0.2, 0.25, M.glass, g);
-      box(h[0], h[1], h[2], h[3], 0.25, 0.31, M.carp, g);
+      marco(h[0], h[1], h[2], h[3], 0.17, 0.25, g);
       if (h[2] === FC.upB[0]) box(h[0], h[1], FC.upB[0] + 0.7, FC.upB[0] + 0.75, -0.04, 0.0, M.rail, g);
     });
     FC.low.forEach(function(o){ if (!(sot && o.gate)) box(o.x0, o.x1, -0.6, 0.0, -0.9, 0.4, M.walk, g); });   // escalones al medio nivel
