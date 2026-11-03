@@ -251,7 +251,10 @@ td.pr,td.prs{font-family:var(--mono);text-align:right;white-space:nowrap}
       <label for="p_com">Comercio: veces el precio de venta<input id="p_com" type="number" step="0.1" value="1.5"></label>
       <label for="p_est">Precio por estacionamiento (S/, 0 si no se venden)<input id="p_est" type="number" step="1000" value="30000"></label>
       <label for="c_m2">Costo de construcción por m² techado (S/)<input id="c_m2" type="number" step="50" value="2100"></label>
-      <label for="c_ter">Valor del terreno (S/)<input id="c_ter" type="number" step="10000" value="0"></label>
+      <label for="c_ind">Indirectos: % del costo de construcción<input id="c_ind" type="number" step="1" value="15"></label>
+      <label for="c_ven">Comercialización: % de las ventas<input id="c_ven" type="number" step="0.5" value="3"></label>
+      <label for="c_ter">Terreno según tasación (US$)<input id="c_ter" type="number" step="10000" value="1025970"></label>
+      <label for="t_c">Tipo de cambio (S/ por US$)<input id="t_c" type="number" step="0.01" value="3.75"></label>
     </div>
     <div class="eco-out">
       <div><span>Venta de departamentos (2,193 m²)</span><b id="o_dep"></b></div>
@@ -260,12 +263,14 @@ td.pr,td.prs{font-family:var(--mono);text-align:right;white-space:nowrap}
       <div><span>Venta de estacionamientos (17)</span><b id="o_est"></b></div>
       <div class="sum"><span>Ventas totales</span><b id="o_vt"></b></div>
       <div><span>Costo de construcción (3,546 m² techados)</span><b id="o_cc"></b></div>
-      <div><span>Terreno</span><b id="o_tr"></b></div>
-      <div class="sum"><span>Utilidad bruta</span><b id="o_ut"></b></div>
+      <div><span>Indirectos (proyecto, licencias, supervisión, gerencia)</span><b id="o_in"></b></div>
+      <div><span>Comercialización</span><b id="o_cv"></b></div>
+      <div><span>Terreno (tasación 2021)</span><b id="o_tr"></b></div>
+      <div class="sum"><span>Utilidad antes de impuestos</span><b id="o_ut"></b></div>
       <div><span>Margen sobre ventas</span><b id="o_mg"></b></div>
     </div>
   </div>
-  <p class="small">El costo de construcción cubre solo la obra: no incluye diseño, licencias, supervisión, IGV, venta ni financiamiento. El área techada total incluye el sótano y las áreas comunes. Para tener una referencia completa, agrega aparte unos 15–25% de costos indirectos.</p>
+  <p class="small">Costo de construcción = obra (incluye sótano y áreas comunes). Indirectos = proyecto, licencias, supervisión, gerencia y seguros, como % de la obra. Comercialización = corredores y publicidad, como % de las ventas. No incluye IGV, impuesto a la renta ni financiamiento. Terreno según la tasación comercial de 2021 (US$ 1,025,970); el tipo de cambio es un supuesto editable.</p>
 </section>
 
 <section>
@@ -349,16 +354,16 @@ td.pr,td.prs{font-family:var(--mono);text-align:right;white-space:nowrap}
 
 <script>
 (function(){
-  var ids=["p_m2","p_ter","p_com","p_est","c_m2","c_ter"];
+  var ids=["p_m2","p_ter","p_com","p_est","c_m2","c_ind","c_ven","c_ter","t_c"];
   var fmt=function(v){return "S/ "+Math.round(v).toLocaleString("es-PE");};
   var val=function(id){var x=parseFloat(document.getElementById(id).value);return isNaN(x)?0:x;};
   var DEP=2193.398, TER=88.920, COM=88, EST=17, TECH=3546.162;
   function calc(){
-    var pm=val("p_m2"), pt=pm*val("p_ter")/100, pc=pm*val("p_com"), pe=val("p_est"), cm=val("c_m2"), ct=val("c_ter");
-    var vd=DEP*pm, vt=TER*pt, vc=COM*pc, ve=EST*pe, tot=vd+vt+vc+ve, cc=TECH*cm, ut=tot-cc-ct;
+    var pm=val("p_m2"), pt=pm*val("p_ter")/100, pc=pm*val("p_com"), pe=val("p_est"), cm=val("c_m2"), ct=val("c_ter")*val("t_c");
+    var vd=DEP*pm, vt=TER*pt, vc=COM*pc, ve=EST*pe, tot=vd+vt+vc+ve, cc=TECH*cm, ci=cc*val("c_ind")/100, cv=tot*val("c_ven")/100, ut=tot-cc-ci-cv-ct;
     var set=function(id,v){document.getElementById(id).textContent=v;};
     set("o_dep",fmt(vd)); set("o_ter",fmt(vt)); set("o_com",fmt(vc)); set("o_est",fmt(ve)); set("o_vt",fmt(tot));
-    set("o_cc","− "+fmt(cc)); set("o_tr","− "+fmt(ct)); set("o_ut",fmt(ut));
+    set("o_cc","− "+fmt(cc)); set("o_in","− "+fmt(ci)); set("o_cv","− "+fmt(cv)); set("o_tr","− "+fmt(ct)); set("o_ut",fmt(ut));
     set("o_mg", tot>0 ? (ut/tot*100).toFixed(1)+" %" : "—");
     var sums={}, all=0;
     document.querySelectorAll("tr[data-a]").forEach(function(r){
