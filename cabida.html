@@ -653,11 +653,10 @@ svg .rail{stroke:#2f3537;stroke-width:1.6;stroke-dasharray:2 2}
   // terraza común +10.00 en uso: piso de madera, baranda retirada 0.80 m de la fachada, mesas, sombrillas, parrilla y personas
   box(0, W, 10, 10.08, 0.4, P.FRONT, M.wood, Ng);
   box(P.BAR, P.PX0, 10, 10.08, P.FRONT, YT, M.wood, Ng);
-  box(0.2, W - 0.2, 10.08, 11.18, 1.18, 1.22, M.rail, Ng);
-  box(P.PX0 - 0.05, P.PX0, 10.08, 11.18, P.FRONT, YT, M.rail, Ng);
-  box(P.PX1, P.PX1 + 0.05, 10.08, 11.18, P.FRONT, YT - 0.5, M.rail, Ng);
-  box(P.PX0, P.PX1, 10.08, 11.18, P.FRONT - 0.05, P.FRONT, M.rail, Ng);
-  box(P.PX1, W, 10.08, 11.18, YT - 0.55, YT - 0.5, M.rail, Ng);
+  // barandas de vidrio con pasamanos delgado: no forman una franja oscura vista desde la calle
+  [[0.2, W - 0.2, 1.18, 1.22], [P.PX0 - 0.05, P.PX0, P.FRONT, YT], [P.PX1, P.PX1 + 0.05, P.FRONT, YT - 0.5], [P.PX0, P.PX1, P.FRONT - 0.05, P.FRONT], [P.PX1, W, YT - 0.55, YT - 0.5]].forEach(function(r){
+    box(r[0], r[1], 10.08, 11.13, r[2], r[3], M.glass, Ng); box(r[0], r[1], 11.13, 11.18, r[2], r[3], M.rail, Ng);
+  });
   var E = 10.08, Mp = [mat(0x3d4a52), mat(0x8c3b32), mat(0x2f5e7a), mat(0x5b6b3a), mat(0xa77a3f)], Mskin = mat(0xd9b48f);
   var Mumb = [mat(0xf2ead8), mat(0xc4573f), mat(0x2f6f73)], Mtab = mat(0xe8e4dc);
   function mesh(geo, m, x, h, d){ var o = new THREE.Mesh(geo, m); o.position.set(x, h, d); o.castShadow = true; Ng.add(o); return o; }
